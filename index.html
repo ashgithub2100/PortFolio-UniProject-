@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portfolio of Aditya Sharma — Computer Science student specializing in AI & Data Science (AIDS). Building practical AI tools, GPU-accelerated computing workflows, and machine learning models.">
+  <meta name="keywords" content="Aditya Sharma, AI Developer, Data Science, Machine Learning, CUDA, Python, Portfolio, Computer Science Student">
+  <meta name="author" content="Aditya Sharma">
+  <title>Aditya Sharma | AI & Data Science Developer</title>
+
+  <!-- Google Fonts: Syne (Display), Plus Jakarta Sans (Body), JetBrains Mono (Code) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Core Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+
+  <!-- Favicon / SVG Icon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='25' fill='%2307090e'/><text x='50%' y='62%' font-size='50' font-family='monospace' font-weight='bold' fill='%2300f5a0' text-anchor='middle'>AS</text></svg>">
+</head>
+<body>
+
+  <!-- Ambient Lighting Orbs & Grid -->
+  <div class="bg-grid-pattern" aria-hidden="true"></div>
+  <div class="ambient-orb ambient-orb-1" aria-hidden="true"></div>
+  <div class="ambient-orb ambient-orb-2" aria-hidden="true"></div>
+  <div class="ambient-orb ambient-orb-3" aria-hidden="true"></div>
+
+  <!-- =========================================================================
+       NAVIGATION BAR
+       ========================================================================= -->
+  <header class="site-header" id="site-header">
+    <div class="nav-pill-wrapper">
+      <nav class="nav-pill" aria-label="Main Navigation">
+        <!-- Logo -->
+        <a href="#hero" class="brand-logo" aria-label="Aditya Sharma Homepage">
+          <span class="brand-monogram">AS</span>
+          <span class="brand-name">Aditya Sharma</span>
+        </a>
+
+        <!-- Desktop Nav Links -->
+        <ul class="nav-links">
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#skills" class="nav-link">Skills</a></li>
+          <li><a href="#projects" class="nav-link">Projects</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+
+        <!-- Navigation Actions -->
+        <div class="nav-actions">
+          <a href="#contact" class="btn btn-outline-emerald btn-sm">Let's Connect</a>
+          <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Menu -->
+  <div class="mobile-nav-overlay" id="mobile-nav-overlay" aria-hidden="true">
+    <ul class="mobile-nav-links">
+      <li><a href="#hero" class="mobile-nav-link">Home</a></li>
+      <li><a href="#about" class="mobile-nav-link">About</a></li>
+      <li><a href="#skills" class="mobile-nav-link">Skills</a></li>
+      <li><a href="#projects" class="mobile-nav-link">Projects</a></li>
+      <li><a href="#contact" class="mobile-nav-link">Contact</a></li>
+    </ul>
+  </div>
+
+  <main id="main-content">
+    <!-- =======================================================================
+         HERO SECTION (With Interactive Three.js 3D Canvas)
+         ======================================================================= -->
+    <section class="hero-section" id="hero">
+      <!-- 3D WebGL Canvas Layer -->
+      <div class="hero-canvas-container" id="hero-3d-canvas-container" aria-hidden="true"></div>
+
+      <div class="container">
+        <div class="hero-content">
+          <!-- Availability Badge -->
+          <div class="hero-badge-row reveal">
+            <div class="status-badge">
+              <span class="status-beacon"></span>
+              <span>Available for internships & collaborations</span>
+            </div>
+          </div>
+
+          <!-- Hero Headline -->
+          <h1 class="hero-title reveal delay-1">
+            Engineering Intelligent Systems with <span class="kinetic-gradient">AI & Compute.</span>
+          </h1>
+
+          <!-- Role / Subtitle Tagline -->
+          <div class="hero-role-tag reveal delay-2">
+            <span>//</span>
+            <span>AI & Data Science (AIDS) / CSE Student — Aspiring Developer & Entrepreneur</span>
+          </div>
+
+          <!-- Bio Pitch -->
+          <p class="hero-description reveal delay-3">
+            I'm a Computer Science student specializing in AI & Data Science, currently building my skills in machine learning and GPU-accelerated computing. Passionate about architecting practical AI tools and launching high-impact tech ventures.
+          </p>
+
+          <!-- CTAs -->
+          <div class="hero-actions reveal delay-4">
+            <a href="#projects" class="btn btn-primary">
+              <span>Explore Projects</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="7" y1="17" x2="17" y2="7"></line>
+                <polyline points="7 7 17 7 17 17"></polyline>
+              </svg>
+            </a>
+            <a href="#contact" class="btn btn-secondary">
+              <span>Get In Touch</span>
+            </a>
+          </div>
+
+          <!-- Live Telemetry / Quick Stats -->
+          <div class="hero-stats-strip reveal delay-5">
+            <div class="stat-item">
+              <div class="stat-value"><span class="accent">CSE</span> AIDS</div>
+              <div class="stat-label">Specialization</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value">CUDA <span class="accent">+</span> ML</div>
+              <div class="stat-label">Current Focus</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value">Python <span class="accent">&</span> LLMs</div>
+              <div class="stat-label">Core Tooling</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         ABOUT ME SECTION (Bento Grid)
+         ======================================================================= -->
+    <section class="section" id="about">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-tag">// 01 &bull; Background &amp; Vision</div>
+          <h2 class="section-title">Driven by Curiosity, <span class="highlight">Powered by Code.</span></h2>
+          <p class="section-subtitle">
+            A glimpse into my technical journey, mindset, and the emerging technologies I'm mastering to solve real problems.
+          </p>
+        </div>
+
+        <div class="bento-grid">
+          <!-- Card 1: The Bio & Entrepreneurial Vision -->
+          <div class="bento-card bento-bio reveal">
+            <div class="bento-icon-header">
+              <div class="bento-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                </svg>
+              </div>
+              <span class="tag-pill tag-emerald">Vision &amp; Ambition</span>
+            </div>
+            <h3 class="bento-card-title">Building Practical AI for Real-World Impact</h3>
+            <p class="bento-card-text">
+              I'm a Computer Science student specializing in AI & Data Science. I believe artificial intelligence is most exciting when it transcends theoretical benchmarks and directly augments human capability.
+            </p>
+            <p class="bento-card-text">
+              My mission is to master low-level computing fundamentals alongside high-level model orchestration—laying the foundation to launch my own technology venture that builds pragmatic, scalable AI software.
+            </p>
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+              <span class="tag-pill">Machine Learning</span>
+              <span class="tag-pill">GPU Optimization</span>
+              <span class="tag-pill">Tech Entrepreneurship</span>
+            </div>
+          </div>
+
+          <!-- Card 2: Academic Specialization -->
+          <div class="bento-card bento-academic reveal delay-1">
+            <div class="bento-icon-header">
+              <div class="bento-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                  <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                </svg>
+              </div>
+              <span class="tag-pill tag-amber">Degree Track</span>
+            </div>
+            <h3 class="bento-card-title">CSE &bull; AI &amp; Data Science</h3>
+            <p class="bento-card-text">
+              Undergraduate program integrating classical computer science principles—algorithms, data structures, and operating systems—with deep dives into probabilistic modeling, data pipelines, and predictive analytics.
+            </p>
+            <div style="padding-top: 1rem; border-top: 1px solid rgba(255, 255, 255, 0.06);">
+              <div style="font-family: var(--font-mono); font-size: 0.825rem; color: var(--text-muted); margin-bottom: 0.35rem;">CORE EMPHASIS:</div>
+              <div style="font-size: 0.95rem; font-weight: 600; color: var(--text-primary);">Algorithms &bull; Mathematics for ML &bull; Systems Architecture</div>
+            </div>
+          </div>
+
+          <!-- Card 3: Interactive Live Terminal -->
+          <div class="bento-card bento-terminal reveal delay-2">
+            <div class="bento-icon-header">
+              <div class="bento-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="4 17 10 11 4 5"></polyline>
+                  <line x1="12" y1="19" x2="20" y2="19"></line>
+                </svg>
+              </div>
+              <span class="tag-pill">Interactive Dev Station</span>
+            </div>
+            <h3 class="bento-card-title">Development Environment</h3>
+
+            <div class="terminal-window">
+              <div class="terminal-header">
+                <div class="terminal-dots">
+                  <span class="terminal-dot red"></span>
+                  <span class="terminal-dot yellow"></span>
+                  <span class="terminal-dot green"></span>
+                </div>
+                <div class="terminal-title">aditya@dev-station:~ (zsh)</div>
+                <div style="font-size: 0.7rem; color: var(--accent-primary); font-family: var(--font-mono);">GPU: RTX 30/40 READY</div>
+              </div>
+              <div class="terminal-body">
+                <div class="terminal-line">
+                  <span class="terminal-prompt">&gt;</span>
+                  <span>whoami</span>
+                </div>
+                <div class="terminal-output">
+                  Aditya Sharma &bull; AI &amp; Data Science Undergraduate &bull; Aspiring Tech Founder
+                </div>
+                <div class="terminal-line">
+                  <span class="terminal-prompt">&gt;</span>
+                  <span>cat interests.json</span>
+                </div>
+                <div class="terminal-output">
+                  ["Large Language Models", "GPU Parallel Computing (CUDA)", "Full-Stack Automation", "Collaborative Filtering"]
+                </div>
+                <div class="terminal-line">
+                  <span class="terminal-prompt">&gt;</span>
+                  <span id="terminal-interactive-line"></span>
+                  <span class="terminal-cursor"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 4: Current Deep Learning Tracks -->
+          <div class="bento-card bento-focus reveal delay-3">
+            <div class="bento-icon-header">
+              <div class="bento-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+                  <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+                  <line x1="6" y1="6" x2="6.01" y2="6"></line>
+                  <line x1="6" y1="18" x2="6.01" y2="18"></line>
+                </svg>
+              </div>
+              <span class="tag-pill tag-amber">Continuous Mastery</span>
+            </div>
+            <h3 class="bento-card-title">Active Learning Horizons</h3>
+            <p class="bento-card-text" style="font-size: 0.95rem; margin-bottom: 1.25rem;">
+              Constantly pushing past comfort zones to master performance-critical stacks:
+            </p>
+
+            <div class="learning-tracks">
+              <div class="track-item">
+                <div class="track-info">
+                  <span class="track-name">CUDA &amp; Parallel Computing</span>
+                  <span class="track-status">Thread hierarchies &bull; Shared memory &bull; GPU acceleration</span>
+                </div>
+                <span class="track-badge">Learning</span>
+              </div>
+
+              <div class="track-item">
+                <div class="track-info">
+                  <span class="track-name">Deep Learning Foundations</span>
+                  <span class="track-status">Neural network backprop &bull; Loss functions &bull; PyTorch</span>
+                </div>
+                <span class="track-badge">Learning</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         SKILLS SECTION (Domain Matrix with Visual Radar)
+         ======================================================================= -->
+    <section class="section" id="skills">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-tag">// 02 &bull; Technical Arsenal</div>
+          <h2 class="section-title">Proficiencies &amp; <span class="highlight">Competencies.</span></h2>
+          <p class="section-subtitle">
+            A specialized toolkit spanning modern AI orchestration, foundational languages, data wrangling libraries, and developer workflows.
+          </p>
+        </div>
+
+        <div class="skills-grid">
+          <!-- Domain 1: AI Tools & LLM Workflows -->
+          <div class="skill-domain-card reveal">
+            <div class="domain-header">
+              <div class="domain-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2a10 10 0 0 1 10 10c0 5.523-4.477 10-10 10S2 17.523 2 12A10 10 0 0 1 12 2z"></path>
+                  <path d="M12 8v8"></path>
+                  <path d="M8 12h8"></path>
+                </svg>
+              </div>
+              <h3 class="domain-title">AI &amp; Prompt Engineering</h3>
+            </div>
+            <div class="skills-list">
+              <div class="skill-row">
+                <div class="skill-name-col">
+                  <span class="skill-dot"></span>
+                  <span class="skill-name">ChatGPT &amp; Claude Workflows</span>
+                </div>
+                <span class="skill-level-tag">Advanced</span>
+              </div>
+              <div class="skill-row">
+                <div class="skill-name-col">
+                  <span class="skill-dot"></span>
+                  <span class="skill-name">Prompt Engineering</span>
+                </div>
+                <span class="skill-level-tag">Techniques &amp; Few-Shot</span>
+              </div>
+              <div class="skill-row">
+                <div class="skill-name-col">
+                  <span class="skill-dot"></span>
+                  <span class="skill-name">LLM APIs (OpenAI / Anthropic)</span>
+                </div>
+                <span class="skill-level-tag">Integration</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Domain 2: Core Languages & GPU Computing -->
+          <div class="skill-domain-card reveal delay-1">
+            <div class="domain-header">
+              <div class="domain-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="16 18 22 12 16 6"></polyline>
+                  <polyline points="8 6 2 12 8 18"></polyline>
+                </svg>
+              </div>
+              <h3 class="domain-title">Programming &amp; Compute</h3>
+            </div>
+            <div class="skills-list">
+              <div class="skill-row">
+                <div class="skill-name-col">
+                  <span class="skill-dot"></span>
+                  <span class="skill-name">Python</span>
+                </div>
+                <span class="skill-level-tag">Primary Language</span>
+              </div>
+              <div class="skill-row">
+                <div class="skill-name-col">
+                  <span class="skill-dot learning"></span>
+                  <span class="skill-name">CUDA (GPU Programming)</span>
+                </div>
+                <span class="skill-level-tag" style="color: var(--accent-secondary);">Active Learning</span>
+              </div>
+              <div class="skill-row">
+                <div class="skill-name-col">
+                  <span class="skill-dot"></span>
+                  <span class="skill-name">C / C++ Basics</span>
+                </div>
+                <span class="skill-level-tag">Academic Systems</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Domain 3: Machine Learning & Analytics -->
+          <div class="skill-domain-card reveal delay-2">
+            <div class="domain-header">
+              <div class="domain-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="18" y1="20" x2="18" y2="10"></line>
+                  <line x1="12" y1="20" x2="12" y2="4"></line>
+                  <line x1="6" y1="20" x2="6" y2="14"></line>
+                </svg>
+              </div>
+              <h3 class="domain-title">ML &amp; Data Science</h3>
+            </div>
+            <div class="skills-list">
+              <div class="skill-row">
+                <div class="skill-name-col">
+                  <span class="skill-dot"></span>
+                  <span class="skill-name">Pandas &amp; NumPy</span>
+                </div>
+                <span class="skill-level-tag">Data Wrangling</span>
+              </div>
+              <div class="skill-row">
+                <div class="skill-name-col">
+                  <span class="skill-dot"></span>
+                  <span class="skill-name">Scikit-learn</span>
+                </div>
+                <span class="skill-level-tag">Classifiers &amp; Matrix Ops</span>
+              </div>
+              <div class="skill-row">
+                <div class="skill-name-col">
+                  <span class="skill-dot learning"></span>
+                  <span class="skill-name">Machine Learning</span>
+                </div>
+                <span class="skill-level-tag" style="color: var(--accent-secondary);">Active Learning</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Domain 4: Developer Workflow & Version Control -->
+          <div class="skill-domain-card reveal delay-3">
+            <div class="domain-header">
+              <div class="domain-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="18" cy="18" r="3"></circle>
+                  <circle cx="6" cy="6" r="3"></circle>
+                  <path d="M13 6h3a2 2 0 0 1 2 2v7"></path>
+                  <line x1="6" y1="9" x2="6" y2="21"></line>
+                </svg>
+              </div>
+              <h3 class="domain-title">Workflow &amp; Version Control</h3>
+            </div>
+            <div class="skills-list">
+              <div class="skill-row">
+                <div class="skill-name-col">
+                  <span class="skill-dot"></span>
+                  <span class="skill-name">Git &amp; GitHub</span>
+                </div>
+                <span class="skill-level-tag">Version Control</span>
+              </div>
+              <div class="skill-row">
+                <div class="skill-name-col">
+                  <span class="skill-dot"></span>
+                  <span class="skill-name">Linux / CLI Navigation</span>
+                </div>
+                <span class="skill-level-tag">Terminal Workflows</span>
+              </div>
+              <div class="skill-row">
+                <div class="skill-name-col">
+                  <span class="skill-dot"></span>
+                  <span class="skill-name">VS Code &amp; Jupyter</span>
+                </div>
+                <span class="skill-level-tag">Environments</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         PROJECTS SECTION (3D Tilt Cards with Spotlight Glare)
+         ======================================================================= -->
+    <section class="section" id="projects">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-tag">// 03 &bull; Featured Works</div>
+          <h2 class="section-title">Engineered to <span class="highlight">Perform.</span></h2>
+          <p class="section-subtitle">
+            Curated projects combining language models, mathematical recommendation algorithms, and performant Python tooling.
+          </p>
+        </div>
+
+        <div class="projects-grid">
+          <!-- Project 1: AI Study Buddy -->
+          <div class="project-tilt-wrapper reveal">
+            <div class="project-card">
+              <div class="project-header">
+                <span class="project-number">01</span>
+                <span class="project-category-badge">LLM &bull; NLP</span>
+              </div>
+              <h3 class="project-title">AI Study Buddy</h3>
+              <p class="project-desc">
+                A Python-powered chatbot that summarizes complex study notes and automatically generates quiz questions from PDFs using modern LLM APIs to supercharge revision retention.
+              </p>
+              <div class="project-tech-stack">
+                <span class="tag-pill tag-emerald">Python</span>
+                <span class="tag-pill">OpenAI / Claude API</span>
+                <span class="tag-pill">Prompt Engineering</span>
+                <span class="tag-pill">PDF Parsing</span>
+              </div>
+              <div class="project-actions">
+                <button class="project-link-btn primary" data-project-trigger="study-buddy">
+                  <span>Architecture &amp; Details</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </button>
+                <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="project-link-btn" aria-label="View AI Study Buddy Code on GitHub">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                  </svg>
+                  <span>Code</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 2: Movie Recommender System -->
+          <div class="project-tilt-wrapper reveal delay-1">
+            <div class="project-card">
+              <div class="project-header">
+                <span class="project-number">02</span>
+                <span class="project-category-badge">Machine Learning</span>
+              </div>
+              <h3 class="project-title">Movie Recommender System</h3>
+              <p class="project-desc">
+                A machine learning model that recommends movies based on user ratings using collaborative filtering. Built with matrix similarity operations to predict user preferences accurately.
+              </p>
+              <div class="project-tech-stack">
+                <span class="tag-pill tag-emerald">Python</span>
+                <span class="tag-pill">Pandas</span>
+                <span class="tag-pill">Scikit-learn</span>
+                <span class="tag-pill">Collaborative Filtering</span>
+              </div>
+              <div class="project-actions">
+                <button class="project-link-btn primary" data-project-trigger="movie-recommender">
+                  <span>Architecture &amp; Details</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </button>
+                <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="project-link-btn" aria-label="View Movie Recommender Code on GitHub">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                  </svg>
+                  <span>Code</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 3: Expense Tracker CLI -->
+          <div class="project-tilt-wrapper reveal delay-2">
+            <div class="project-card">
+              <div class="project-header">
+                <span class="project-number">03</span>
+                <span class="project-category-badge">CLI Tool &bull; Analytics</span>
+              </div>
+              <h3 class="project-title">Expense Tracker CLI</h3>
+              <p class="project-desc">
+                A command-line tool to track and visualize personal spending habits with clean analytics, category breakdown reports, and structured Git version control.
+              </p>
+              <div class="project-tech-stack">
+                <span class="tag-pill tag-emerald">Python</span>
+                <span class="tag-pill">Git Version Control</span>
+                <span class="tag-pill">CLI Analytics</span>
+                <span class="tag-pill">Data Persistence</span>
+              </div>
+              <div class="project-actions">
+                <button class="project-link-btn primary" data-project-trigger="expense-tracker">
+                  <span>Architecture &amp; Details</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </button>
+                <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="project-link-btn" aria-label="View Expense Tracker CLI Code on GitHub">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                  </svg>
+                  <span>Code</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         CONTACT SECTION (Direct Reach-Out Hub)
+         ======================================================================= -->
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="contact-hub-card reveal">
+          <div class="status-badge" style="margin-bottom: 2rem;">
+            <span class="status-beacon"></span>
+            <span>Open to Opportunities</span>
+          </div>
+
+          <h2 class="contact-title">Let's Build Something <span class="highlight">Extraordinary.</span></h2>
+          <p class="contact-subtitle">
+            Whether you are looking for an ambitious AI/ML student intern, want to collaborate on open-source tools, or discuss potential tech ventures—my inbox is always open.
+          </p>
+
+          <!-- Direct Channels Grid -->
+          <div class="contact-channels-grid">
+            <!-- Email Channel -->
+            <div class="contact-channel-item">
+              <div class="channel-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+              </div>
+              <h3 class="channel-name">Email</h3>
+              <p class="channel-info">Direct mail inbox</p>
+              <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center;">
+                <a href="mailto:aditya.sharma.dev@example.com" class="btn btn-primary btn-sm">
+                  <span>Send Mail</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                    <polyline points="7 7 17 7 17 17"></polyline>
+                  </svg>
+                </a>
+                <button class="copy-email-btn" data-email="aditya.sharma.dev@example.com" aria-label="Copy email address to clipboard">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                  </svg>
+                  <span>Copy</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- GitHub Channel -->
+            <div class="contact-channel-item">
+              <div class="channel-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                </svg>
+              </div>
+              <h3 class="channel-name">GitHub</h3>
+              <p class="channel-info">Source code &amp; experiments</p>
+              <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">
+                <span>github.com/aditya</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="7" y1="17" x2="17" y2="7"></line>
+                  <polyline points="7 7 17 7 17 17"></polyline>
+                </svg>
+              </a>
+            </div>
+
+            <!-- LinkedIn Channel -->
+            <div class="contact-channel-item">
+              <div class="channel-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                  <rect x="2" y="9" width="4" height="12"></rect>
+                  <circle cx="4" cy="4" r="2"></circle>
+                </svg>
+              </div>
+              <h3 class="channel-name">LinkedIn</h3>
+              <p class="channel-info">Professional network &amp; updates</p>
+              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">
+                <span>Connect on LinkedIn</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="7" y1="17" x2="17" y2="7"></line>
+                  <polyline points="7 7 17 7 17 17"></polyline>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- =========================================================================
+       FOOTER
+       ========================================================================= -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-left">
+          <div class="brand-logo">
+            <span class="brand-monogram">AS</span>
+            <span class="brand-name">Aditya Sharma</span>
+          </div>
+          <div class="footer-credits">
+            Designed &amp; Developed with <span>HTML5, Vanilla CSS &amp; Three.js</span>
+          </div>
+        </div>
+        <ul class="footer-links">
+          <li><a href="#hero" class="footer-link">Top</a></li>
+          <li><a href="#about" class="footer-link">About</a></li>
+          <li><a href="#skills" class="footer-link">Skills</a></li>
+          <li><a href="#projects" class="footer-link">Projects</a></li>
+          <li><a href="#contact" class="footer-link">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =========================================================================
+       PROJECT DETAILS MODAL (DEEP DIVE)
+       ========================================================================= -->
+  <div class="modal-overlay" id="project-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-dialog">
+      <button class="modal-close-btn" id="modal-close-btn" aria-label="Close modal window">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+      <div class="modal-tag" id="modal-tag">01 // PROJECT ARCHITECTURE</div>
+      <h3 class="modal-title" id="modal-title">Project Title</h3>
+      
+      <div class="modal-section-title">Overview &amp; Problem Solved</div>
+      <p class="modal-text" id="modal-desc"></p>
+
+      <div class="modal-section-title">Technical Architecture &amp; Implementation</div>
+      <p class="modal-text" id="modal-arch"></p>
+
+      <div class="modal-section-title">Technologies &amp; Libraries Used</div>
+      <div class="modal-tech-list" id="modal-tech"></div>
+
+      <div style="padding-top: 1.5rem; border-top: 1px solid rgba(255, 255, 255, 0.08); display: flex; gap: 1rem;">
+        <a id="modal-github-link" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">
+          <span>View Source on GitHub</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="7" y1="17" x2="17" y2="7"></line>
+            <polyline points="7 7 17 7 17 17"></polyline>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       TOAST NOTIFICATION (Email Copied Feedback)
+       ========================================================================= -->
+  <div class="toast-container" id="toast-notification" role="status" aria-live="polite">
+    <span class="toast-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+    </span>
+    <span id="toast-message">Email copied to clipboard!</span>
+  </div>
+
+  <!-- Three.js (r128 CDN) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <!-- Portfolio Scripts -->
+  <script src="js/three-scene.js"></script>
+  <script src="js/cursor.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
