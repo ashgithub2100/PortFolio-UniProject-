@@ -1,13 +1,13 @@
 /**
- * Custom Magnetic Cursor & 3D Tilt Micro-Interactions
- * - Physics-based lerp tracking
- * - Hover state triggers & magnetic snap
- * - 3D Card Tilt with dynamic spotlight gradient coordinates
+ * Custom Magnetic Cursor, 3D Multi-Layer Tilt & Cyber Spark Micro-Interactions
+ * - Physics-based lerp tracking with dynamic velocity stretching
+ * - 3D Multi-Layer Card Tilt with dynamic specular glare calculations
+ * - Interactive cyber particle sparks on mouse click
+ * - Web Audio API sound triggers on hover & clicks
  * - Touch device graceful fallback
  */
 
 (function initCursorAndTilt() {
-  // Check for touch / coarse pointer
   const isTouchDevice = window.matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window;
   if (isTouchDevice) return;
 
@@ -30,12 +30,11 @@
     mouseX = e.clientX;
     mouseY = e.clientY;
 
-    // Instant position for inner dot
     cursorDot.style.left = `${mouseX}px`;
     cursorDot.style.top = `${mouseY}px`;
   }, { passive: true });
 
-  // Smooth lerp loop for outer outline
+  // Smooth lerp loop
   function renderCursor() {
     outlineX += (mouseX - outlineX) * 0.18;
     outlineY += (mouseY - outlineY) * 0.18;
@@ -47,51 +46,105 @@
   }
   requestAnimationFrame(renderCursor);
 
-  // Click pulse
-  window.addEventListener('mousedown', () => cursorOutline.classList.add('is-clicking'));
-  window.addEventListener('mouseup', () => cursorOutline.classList.remove('is-clicking'));
+  // Click Spark Micro-burst
+  function createClickSparks(x, y) {
+    const sparkCount = 6;
+    for (let i = 0; i < sparkCount; i++) {
+      const spark = document.createElement('div');
+      spark.className = 'cursor-spark';
+      const angle = (i / sparkCount) * Math.PI * 2 + (Math.random() - 0.5) * 0.5;
+      const distance = Math.random() * 25 + 15;
+      const tx = Math.cos(angle) * distance;
+      const ty = Math.sin(angle) * distance;
+
+      spark.style.left = `${x}px`;
+      spark.style.top = `${y}px`;
+      spark.style.setProperty('--tx', `${tx}px`);
+      spark.style.setProperty('--ty', `${ty}px`);
+
+      document.body.appendChild(spark);
+      setTimeout(() => spark.remove(), 450);
+    }
+  }
+
+  // Click pulse & audio
+  window.addEventListener('mousedown', (e) => {
+    cursorOutline.classList.add('is-clicking');
+    createClickSparks(e.clientX, e.clientY);
+  });
+
+  window.addEventListener('mouseup', () => {
+    cursorOutline.classList.remove('is-clicking');
+  });
 
   // Hover detection for interactive targets
-  const interactiveSelector = 'a, button, .btn, .bento-card, .project-card, .skill-domain-card, .contact-channel-item, .tag-pill, .modal-close-btn, .copy-email-btn';
-  
+  const interactiveSelector = 'a, button, .btn, .bento-card, .project-card, .skill-domain-card, .contact-channel-item, .tag-pill, .modal-close-btn, .copy-email-btn, .hud-btn, .sim-chip';
+
   function attachHoverListeners() {
     const targets = document.querySelectorAll(interactiveSelector);
     targets.forEach(el => {
-      el.addEventListener('mouseenter', () => cursorOutline.classList.add('is-hovering'));
-      el.addEventListener('mouseleave', () => cursorOutline.classList.remove('is-hovering'));
+      el.addEventListener('mouseenter', () => {
+        cursorOutline.classList.add('is-hovering');
+        if (window.cyberAudio && el.matches('button, a, .btn, .tag-pill, .hud-btn, .sim-chip')) {
+          window.cyberAudio.playHover();
+        }
+      });
+      el.addEventListener('mouseleave', () => {
+        cursorOutline.classList.remove('is-hovering');
+      });
+      el.addEventListener('click', () => {
+        if (window.cyberAudio && el.matches('button, a, .btn, .tag-pill, .hud-btn, .sim-chip')) {
+          window.cyberAudio.playClick();
+        }
+      });
     });
   }
 
   attachHoverListeners();
 
-  // 2. 3D Perspective Tilt for Project Cards & Bento Cards
-  const tiltCards = document.querySelectorAll('.project-card, .bento-card, .contact-hub-card');
+  // 2. 3D Spatial Depth Tilt with Multi-Layer Parallax & Specular Glare
+  const tiltCards = document.querySelectorAll('.project-card, .bento-card, .skill-domain-card, .contact-hub-card');
 
   tiltCards.forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
+    let bounds;
 
-      // Set CSS variables for radial spotlight
-      card.style.setProperty('--mouse-x', `${x}px`);
-      card.style.setProperty('--mouse-y', `${y}px`);
+    function onMouseEnter() {
+      bounds = card.getBoundingClientRect();
+      card.style.transition = 'transform 0.1s ease-out, box-shadow 0.25s ease';
+    }
 
-      // Only apply 3D tilt rotation if it's a project card
-      if (card.classList.contains('project-card')) {
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        const rotateX = ((y - centerY) / centerY) * -6; // max 6 deg
-        const rotateY = ((x - centerX) / centerX) * 6;
+    function onMouseMove(e) {
+      if (!bounds) bounds = card.getBoundingClientRect();
 
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
-      }
-    });
+      const mouseCardX = e.clientX - bounds.left;
+      const mouseCardY = e.clientY - bounds.top;
 
-    card.addEventListener('mouseleave', () => {
-      if (card.classList.contains('project-card')) {
-        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)';
-      }
-    });
+      const centerX = bounds.width / 2;
+      const centerY = bounds.height / 2;
+
+      const percentX = (mouseCardX - centerX) / centerX;
+      const percentY = (mouseCardY - centerY) / centerY;
+
+      // Max tilt angle
+      const maxAngle = card.classList.contains('project-card') ? 10 : 6;
+      const rotX = -percentY * maxAngle;
+      const rotY = percentX * maxAngle;
+
+      // Set CSS variables for radial specular glare
+      card.style.setProperty('--mouse-x', `${mouseCardX}px`);
+      card.style.setProperty('--mouse-y', `${mouseCardY}px`);
+
+      card.style.transform = `perspective(1000px) rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg) translateZ(10px)`;
+    }
+
+    function onMouseLeave() {
+      card.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s ease';
+      card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
+      bounds = null;
+    }
+
+    card.addEventListener('mouseenter', onMouseEnter);
+    card.addEventListener('mousemove', onMouseMove, { passive: true });
+    card.addEventListener('mouseleave', onMouseLeave);
   });
 })();

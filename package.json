@@ -1,0 +1,19 @@
+{
+  "name": "aditya-sharma-portfolio",
+  "version": "1.0.0",
+  "description": "Interactive 3D Portfolio - Aditya Sharma | AI & Data Science Developer",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx -y serve . -l 8080",
+    "start": "npx -y serve . -l 8080"
+  },
+  "keywords": [
+    "portfolio",
+    "threejs",
+    "ai",
+    "data-science",
+    "interactive"
+  ],
+  "author": "Aditya Sharma <ash76323@gmail.com>",
+  "license": "MIT"
+}

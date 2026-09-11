@@ -1,11 +1,11 @@
 /**
  * Main Application Logic - Aditya Sharma Portfolio
  * Features:
- * - IntersectionObserver scroll reveal orchestrator
+ * - Scroll reveal orchestrator
+ * - Sound Mute/Unmute state toggle with audio engine
+ * - Project Architecture & Interactive Simulator Modal
  * - Quick copy email with animated toast notification
- * - Project Architecture & Deep Dive Modal
  * - Mobile navigation drawer
- * - Interactive Simulated Terminal
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -19,24 +19,42 @@ document.addEventListener('DOMContentLoaded', () => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('is-revealed');
-          // Unobserve once revealed for performance
           observer.unobserve(entry.target);
         }
       });
     }, {
       root: null,
-      threshold: 0.12,
-      rootMargin: '0px 0px -40px 0px'
+      threshold: 0.1,
+      rootMargin: '0px 0px -30px 0px'
     });
 
     revealElements.forEach(el => revealObserver.observe(el));
   } else {
-    // Fallback for older browsers
     revealElements.forEach(el => el.classList.add('is-revealed'));
   }
 
   // --------------------------------------------------------------------------
-  // 2. MOBILE NAVIGATION DRAWER
+  // 2. SOUND TOGGLE BUTTON (Web Audio API)
+  // --------------------------------------------------------------------------
+  const audioToggleBtn = document.getElementById('audio-toggle-btn');
+  const audioIcon = document.getElementById('audio-icon');
+
+  if (audioToggleBtn && window.cyberAudio) {
+    audioToggleBtn.addEventListener('click', () => {
+      const isMuted = window.cyberAudio.toggle();
+      audioToggleBtn.classList.toggle('is-muted', isMuted);
+      audioToggleBtn.setAttribute('aria-label', isMuted ? 'Unmute Audio' : 'Mute Audio');
+      
+      if (audioIcon) {
+        audioIcon.innerHTML = isMuted 
+          ? `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>`
+          : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>`;
+      }
+    });
+  }
+
+  // --------------------------------------------------------------------------
+  // 3. MOBILE NAVIGATION DRAWER
   // --------------------------------------------------------------------------
   const mobileMenuBtn = document.getElementById('mobile-menu-btn');
   const mobileNavOverlay = document.getElementById('mobile-nav-overlay');
@@ -47,6 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const isActive = mobileNavOverlay.classList.toggle('is-active');
       document.body.style.overflow = isActive ? 'hidden' : '';
       mobileMenuBtn.setAttribute('aria-expanded', isActive);
+      if (window.cyberAudio) window.cyberAudio.playClick();
     };
 
     mobileMenuBtn.addEventListener('click', toggleMenu);
@@ -60,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --------------------------------------------------------------------------
-  // 3. COPY EMAIL TO CLIPBOARD WITH TOAST NOTIFICATION
+  // 4. COPY EMAIL TO CLIPBOARD WITH TOAST
   // --------------------------------------------------------------------------
   const copyEmailBtns = document.querySelectorAll('.copy-email-btn');
   const toast = document.getElementById('toast-notification');
@@ -81,13 +100,13 @@ document.addEventListener('DOMContentLoaded', () => {
   copyEmailBtns.forEach(btn => {
     btn.addEventListener('click', async (e) => {
       e.preventDefault();
-      const email = btn.getAttribute('data-email') || 'aditya.sharma.dev@example.com';
-      
+      const email = btn.getAttribute('data-email') || 'ash76323@gmail.com';
+      if (window.cyberAudio) window.cyberAudio.playClick();
+
       try {
         if (navigator.clipboard && window.isSecureContext) {
           await navigator.clipboard.writeText(email);
         } else {
-          // Fallback for non-https local environments
           const textArea = document.createElement('textarea');
           textArea.value = email;
           textArea.style.position = 'fixed';
@@ -106,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // --------------------------------------------------------------------------
-  // 4. PROJECT ARCHITECTURE & DEEP DIVE MODAL
+  // 5. PROJECT ARCHITECTURE & INTERACTIVE SIMULATOR MODAL
   // --------------------------------------------------------------------------
   const modalOverlay = document.getElementById('project-modal');
   const modalCloseBtn = document.getElementById('modal-close-btn');
@@ -116,6 +135,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalArch = document.getElementById('modal-arch');
   const modalTech = document.getElementById('modal-tech');
   const modalGithubLink = document.getElementById('modal-github-link');
+  const modalSimTabBtn = document.getElementById('modal-tab-sim');
+  const modalArchTabBtn = document.getElementById('modal-tab-arch');
+  const modalArchContent = document.getElementById('modal-arch-content');
+  const modalSimContent = document.getElementById('modal-sim-content');
 
   const projectData = {
     'study-buddy': {
@@ -144,18 +167,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  const projectModalTriggers = document.querySelectorAll('[data-project-trigger]');
+  let activeProjectId = null;
 
-  function openProjectModal(projectId) {
+  function openProjectModal(projectId, defaultTab = 'arch') {
     const data = projectData[projectId];
     if (!data || !modalOverlay) return;
+    activeProjectId = projectId;
 
     modalTag.textContent = data.tag;
     modalTitle.textContent = data.title;
     modalDesc.textContent = data.desc;
     modalArch.textContent = data.arch;
 
-    // Render tech pills
     modalTech.innerHTML = '';
     data.tech.forEach(t => {
       const pill = document.createElement('span');
@@ -164,37 +187,67 @@ document.addEventListener('DOMContentLoaded', () => {
       modalTech.appendChild(pill);
     });
 
-    if (modalGithubLink) {
-      modalGithubLink.href = data.github;
+    if (modalGithubLink) modalGithubLink.href = data.github;
+
+    // Render interactive simulator
+    if (window.renderProjectSimulator && modalSimContent) {
+      window.renderProjectSimulator(projectId, modalSimContent);
     }
+
+    switchModalTab(defaultTab);
 
     modalOverlay.classList.add('is-active');
     document.body.style.overflow = 'hidden';
+
+    if (window.cyberAudio) window.cyberAudio.playClick();
   }
 
   function closeProjectModal() {
     if (!modalOverlay) return;
     modalOverlay.classList.remove('is-active');
     document.body.style.overflow = '';
+    if (window.cyberAudio) window.cyberAudio.playClick();
   }
 
-  projectModalTriggers.forEach(btn => {
+  function switchModalTab(tabName) {
+    if (tabName === 'sim') {
+      if (modalSimTabBtn) modalSimTabBtn.classList.add('is-active');
+      if (modalArchTabBtn) modalArchTabBtn.classList.remove('is-active');
+      if (modalSimContent) modalSimContent.style.display = 'block';
+      if (modalArchContent) modalArchContent.style.display = 'none';
+    } else {
+      if (modalArchTabBtn) modalArchTabBtn.classList.add('is-active');
+      if (modalSimTabBtn) modalSimTabBtn.classList.remove('is-active');
+      if (modalArchContent) modalArchContent.style.display = 'block';
+      if (modalSimContent) modalSimContent.style.display = 'none';
+    }
+  }
+
+  if (modalArchTabBtn && modalSimTabBtn) {
+    modalArchTabBtn.addEventListener('click', () => {
+      switchModalTab('arch');
+      if (window.cyberAudio) window.cyberAudio.playClick();
+    });
+    modalSimTabBtn.addEventListener('click', () => {
+      switchModalTab('sim');
+      if (window.cyberAudio) window.cyberAudio.playClick();
+    });
+  }
+
+  document.querySelectorAll('[data-project-trigger]').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
       const id = btn.getAttribute('data-project-trigger');
-      openProjectModal(id);
+      const tab = btn.getAttribute('data-project-tab') || 'arch';
+      openProjectModal(id, tab);
     });
   });
 
-  if (modalCloseBtn) {
-    modalCloseBtn.addEventListener('click', closeProjectModal);
-  }
+  if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeProjectModal);
 
   if (modalOverlay) {
     modalOverlay.addEventListener('click', (e) => {
-      if (e.target === modalOverlay) {
-        closeProjectModal();
-      }
+      if (e.target === modalOverlay) closeProjectModal();
     });
 
     window.addEventListener('keydown', (e) => {
@@ -202,49 +255,5 @@ document.addEventListener('DOMContentLoaded', () => {
         closeProjectModal();
       }
     });
-  }
-
-  // --------------------------------------------------------------------------
-  // 5. INTERACTIVE TERMINAL FLUID TYPING / PROMPT
-  // --------------------------------------------------------------------------
-  const terminalDynamic = document.getElementById('terminal-interactive-line');
-  if (terminalDynamic) {
-    const commands = [
-      'python -m inference --model llama3 --gpu cuda:0',
-      'git status -s # All pipelines operational',
-      'torch.cuda.is_available() # True [NVIDIA CUDA Core]',
-      'build --target startup_venture --mode scale'
-    ];
-    let cmdIdx = 0;
-    let charIdx = 0;
-    let isDeleting = false;
-    let typeDelay = 80;
-
-    function typeCommand() {
-      const current = commands[cmdIdx];
-
-      if (isDeleting) {
-        terminalDynamic.textContent = current.substring(0, charIdx - 1);
-        charIdx--;
-        typeDelay = 40;
-      } else {
-        terminalDynamic.textContent = current.substring(0, charIdx + 1);
-        charIdx++;
-        typeDelay = 70;
-      }
-
-      if (!isDeleting && charIdx === current.length) {
-        typeDelay = 2200; // Pause at end of command
-        isDeleting = true;
-      } else if (isDeleting && charIdx === 0) {
-        isDeleting = false;
-        cmdIdx = (cmdIdx + 1) % commands.length;
-        typeDelay = 500;
-      }
-
-      setTimeout(typeCommand, typeDelay);
-    }
-
-    setTimeout(typeCommand, 1000);
   }
 });

@@ -51,6 +51,16 @@
 
         <!-- Navigation Actions -->
         <div class="nav-actions">
+          <!-- Cyber Audio SFX Toggle -->
+          <button class="nav-audio-btn is-muted" id="audio-toggle-btn" aria-label="Unmute futuristic cyber soundscapes" title="Toggle Futuristic Audio Effects">
+            <span id="audio-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <line x1="23" y1="9" x2="17" y2="15"></line>
+                <line x1="17" y1="9" x2="23" y2="15"></line>
+              </svg>
+            </span>
+          </button>
           <a href="#contact" class="btn btn-outline-emerald btn-sm">Let's Connect</a>
           <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -85,13 +95,46 @@
 
       <div class="container">
         <div class="hero-content">
-          <!-- Availability Badge -->
+          <!-- Availability Badge & 3D Holo HUD Dock -->
           <div class="hero-badge-row reveal">
             <div class="status-badge">
               <span class="status-beacon"></span>
               <span>Available for internships & collaborations</span>
             </div>
+
+            <!-- Interactive 3D Holo-Station Dock -->
+            <div class="hero-hud-dock" aria-label="3D Visualizer Controls">
+              <div class="hud-title-badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                  <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                  <polyline points="2 17 12 22 22 17"></polyline>
+                  <polyline points="2 12 12 17 22 12"></polyline>
+                </svg>
+                <span>3D HOLO</span>
+              </div>
+              <div class="hud-modes-group">
+                <button class="hud-btn is-active" data-holo-mode="neural-torus">Neural Torus</button>
+                <button class="hud-btn" data-holo-mode="quantum-core">Quantum Core</button>
+                <button class="hud-btn" data-holo-mode="cyber-sphere">Cyber Sphere</button>
+              </div>
+              <button class="hud-icon-btn is-active" id="hud-spin-toggle" title="Toggle 3D Rotation" aria-label="Toggle 3D Rotation">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
+                </svg>
+              </button>
+              <button class="hud-icon-btn" id="hud-pulse-toggle" title="Trigger Particle Shockwave" aria-label="Trigger Particle Shockwave">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </button>
+              <div class="hud-telemetry">
+                <span>MODE: <span class="accent" id="hud-active-mode-label">NEURAL TORUS</span></span>
+                <span class="accent" id="hud-telemetry-fps">60 FPS</span>
+              </div>
+            </div>
           </div>
+
 
           <!-- Hero Headline -->
           <h1 class="hero-title reveal delay-1">
@@ -225,24 +268,20 @@
                 <div style="font-size: 0.7rem; color: var(--accent-primary); font-family: var(--font-mono);">GPU: RTX 30/40 READY</div>
               </div>
               <div class="terminal-body">
-                <div class="terminal-line">
-                  <span class="terminal-prompt">&gt;</span>
-                  <span>whoami</span>
-                </div>
-                <div class="terminal-output">
-                  Aditya Sharma &bull; AI &amp; Data Science Undergraduate &bull; Aspiring Tech Founder
-                </div>
-                <div class="terminal-line">
-                  <span class="terminal-prompt">&gt;</span>
-                  <span>cat interests.json</span>
-                </div>
-                <div class="terminal-output">
-                  ["Large Language Models", "GPU Parallel Computing (CUDA)", "Full-Stack Automation", "Collaborative Filtering"]
-                </div>
-                <div class="terminal-line">
-                  <span class="terminal-prompt">&gt;</span>
-                  <span id="terminal-interactive-line"></span>
-                  <span class="terminal-cursor"></span>
+                <div class="terminal-interactive-wrapper">
+                  <div class="terminal-interactive-body" id="terminal-interactive-body"></div>
+                  <form class="terminal-form" id="terminal-form" autocomplete="off">
+                    <span class="terminal-prompt">&gt;</span>
+                    <input type="text" class="terminal-input" id="terminal-command-input" placeholder="Type a command (e.g., 'help', 'skills', 'matrix')..." spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off">
+                  </form>
+                  <div class="terminal-quick-pills">
+                    <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); align-self: center;">Quick:</span>
+                    <button type="button" class="term-pill" data-term-cmd="help">help</button>
+                    <button type="button" class="term-pill" data-term-cmd="skills">skills</button>
+                    <button type="button" class="term-pill" data-term-cmd="projects">projects</button>
+                    <button type="button" class="term-pill" data-term-cmd="matrix">matrix</button>
+                    <button type="button" class="term-pill" data-term-cmd="clear">clear</button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -450,6 +489,23 @@
             </div>
           </div>
         </div>
+
+        <!-- Interactive 3D Skill Constellation Galaxy & Holographic Inspector -->
+        <div class="skills-3d-wrapper reveal">
+          <div>
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem;">
+              <div style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent-primary); display: flex; align-items: center; gap: 0.5rem;">
+                <span class="status-beacon"></span>
+                <span>INTERACTIVE 3D SKILL GALAXY</span>
+              </div>
+              <span style="font-family: var(--font-mono); font-size: 0.725rem; color: var(--text-muted); background: rgba(255, 255, 255, 0.04); padding: 0.2rem 0.5rem; border-radius: 4px;">// DRAG TO ROTATE &bull; HOVER NODE TO INSPECT</span>
+            </div>
+            <div class="skills-3d-container" id="skills-3d-container"></div>
+          </div>
+          <div class="skills-3d-sidebar">
+            <div class="skill-holo-card" id="skill-holo-card"></div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -485,12 +541,18 @@
                 <span class="tag-pill">PDF Parsing</span>
               </div>
               <div class="project-actions">
-                <button class="project-link-btn primary" data-project-trigger="study-buddy">
-                  <span>Architecture &amp; Details</span>
+                <button class="project-link-btn primary" data-project-trigger="study-buddy" data-project-tab="arch">
+                  <span>Architecture</span>
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="5" y1="12" x2="19" y2="12"></line>
                     <polyline points="12 5 19 12 12 19"></polyline>
                   </svg>
+                </button>
+                <button class="project-link-btn" data-project-trigger="study-buddy" data-project-tab="sim" style="color: var(--accent-primary); border-color: rgba(0, 245, 160, 0.3);">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                  </svg>
+                  <span>Live Demo</span>
                 </button>
                 <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="project-link-btn" aria-label="View AI Study Buddy Code on GitHub">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -520,12 +582,18 @@
                 <span class="tag-pill">Collaborative Filtering</span>
               </div>
               <div class="project-actions">
-                <button class="project-link-btn primary" data-project-trigger="movie-recommender">
-                  <span>Architecture &amp; Details</span>
+                <button class="project-link-btn primary" data-project-trigger="movie-recommender" data-project-tab="arch">
+                  <span>Architecture</span>
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="5" y1="12" x2="19" y2="12"></line>
                     <polyline points="12 5 19 12 12 19"></polyline>
                   </svg>
+                </button>
+                <button class="project-link-btn" data-project-trigger="movie-recommender" data-project-tab="sim" style="color: var(--accent-primary); border-color: rgba(0, 245, 160, 0.3);">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                  </svg>
+                  <span>Live Demo</span>
                 </button>
                 <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="project-link-btn" aria-label="View Movie Recommender Code on GitHub">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -555,12 +623,18 @@
                 <span class="tag-pill">Data Persistence</span>
               </div>
               <div class="project-actions">
-                <button class="project-link-btn primary" data-project-trigger="expense-tracker">
-                  <span>Architecture &amp; Details</span>
+                <button class="project-link-btn primary" data-project-trigger="expense-tracker" data-project-tab="arch">
+                  <span>Architecture</span>
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="5" y1="12" x2="19" y2="12"></line>
                     <polyline points="12 5 19 12 12 19"></polyline>
                   </svg>
+                </button>
+                <button class="project-link-btn" data-project-trigger="expense-tracker" data-project-tab="sim" style="color: var(--accent-primary); border-color: rgba(0, 245, 160, 0.3);">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                  </svg>
+                  <span>Live Demo</span>
                 </button>
                 <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="project-link-btn" aria-label="View Expense Tracker CLI Code on GitHub">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -602,16 +676,16 @@
                 </svg>
               </div>
               <h3 class="channel-name">Email</h3>
-              <p class="channel-info">Direct mail inbox</p>
+              <p class="channel-info" style="font-family: var(--font-mono); color: var(--accent-primary);">ash76323@gmail.com</p>
               <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center;">
-                <a href="mailto:aditya.sharma.dev@example.com" class="btn btn-primary btn-sm">
+                <a href="mailto:ash76323@gmail.com" class="btn btn-primary btn-sm">
                   <span>Send Mail</span>
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="7" y1="17" x2="17" y2="7"></line>
                     <polyline points="7 7 17 7 17 17"></polyline>
                   </svg>
                 </a>
-                <button class="copy-email-btn" data-email="aditya.sharma.dev@example.com" aria-label="Copy email address to clipboard">
+                <button class="copy-email-btn" data-email="ash76323@gmail.com" aria-label="Copy email address to clipboard">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                     <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
@@ -703,17 +777,29 @@
       </button>
       <div class="modal-tag" id="modal-tag">01 // PROJECT ARCHITECTURE</div>
       <h3 class="modal-title" id="modal-title">Project Title</h3>
+
+      <!-- Modal Tabs: Architecture vs Live Interactive Simulator -->
+      <div class="modal-tabs">
+        <button class="modal-tab-btn is-active" id="modal-tab-arch">01 // Architecture &amp; Specs</button>
+        <button class="modal-tab-btn" id="modal-tab-sim">02 // Live Interactive Simulator</button>
+      </div>
       
-      <div class="modal-section-title">Overview &amp; Problem Solved</div>
-      <p class="modal-text" id="modal-desc"></p>
+      <!-- Tab 1: Architecture -->
+      <div id="modal-arch-content">
+        <div class="modal-section-title">Overview &amp; Problem Solved</div>
+        <p class="modal-text" id="modal-desc"></p>
 
-      <div class="modal-section-title">Technical Architecture &amp; Implementation</div>
-      <p class="modal-text" id="modal-arch"></p>
+        <div class="modal-section-title">Technical Architecture &amp; Implementation</div>
+        <p class="modal-text" id="modal-arch"></p>
 
-      <div class="modal-section-title">Technologies &amp; Libraries Used</div>
-      <div class="modal-tech-list" id="modal-tech"></div>
+        <div class="modal-section-title">Technologies &amp; Libraries Used</div>
+        <div class="modal-tech-list" id="modal-tech"></div>
+      </div>
 
-      <div style="padding-top: 1.5rem; border-top: 1px solid rgba(255, 255, 255, 0.08); display: flex; gap: 1rem;">
+      <!-- Tab 2: Interactive Simulator -->
+      <div id="modal-sim-content" style="display: none;"></div>
+
+      <div style="padding-top: 1.5rem; border-top: 1px solid rgba(255, 255, 255, 0.08); display: flex; gap: 1rem; margin-top: 1.5rem;">
         <a id="modal-github-link" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">
           <span>View Source on GitHub</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -740,8 +826,13 @@
   <!-- Three.js (r128 CDN) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
-  <!-- Portfolio Scripts -->
+  <!-- Portfolio Scripts (Cybernetic Stack) -->
+  <script src="js/audio.js"></script>
+  <script src="js/ambient-particles.js"></script>
   <script src="js/three-scene.js"></script>
+  <script src="js/skills-3d.js"></script>
+  <script src="js/terminal.js"></script>
+  <script src="js/project-simulators.js"></script>
   <script src="js/cursor.js"></script>
   <script src="js/main.js"></script>
 </body>
