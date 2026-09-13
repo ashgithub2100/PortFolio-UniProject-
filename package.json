@@ -1,19 +1,43 @@
 {
   "name": "aditya-sharma-portfolio",
-  "version": "1.0.0",
-  "description": "Interactive 3D Portfolio - Aditya Sharma | AI & Data Science Developer",
-  "main": "index.html",
+  "version": "2.0.0",
+  "description": "Interactive 3D AI & Data Science Developer Portfolio with Vite, React, Tailwind CSS, TypeScript & shadcn/ui",
+  "type": "module",
   "scripts": {
-    "dev": "npx -y serve . -l 8080",
-    "start": "npx -y serve . -l 8080"
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "serve:legacy": "npx -y serve . -l 8080"
   },
   "keywords": [
     "portfolio",
-    "threejs",
+    "react",
+    "vite",
+    "tailwindcss",
+    "typescript",
+    "shadcn",
     "ai",
-    "data-science",
-    "interactive"
+    "data-science"
   ],
   "author": "Aditya Sharma <ash76323@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.45.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwind-merge": "^3.6.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/node": "^22.13.10",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^5.7.3",
+    "vite": "^6.2.1"
+  }
 }
