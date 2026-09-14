@@ -217,3 +217,68 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #71717a;
 }
+
+/* 3D Perspective & Command Center Card Effects */
+.hero-card-perspective {
+  perspective: 1400px;
+}
+
+.hero-command-card {
+  transform-style: preserve-3d;
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.hud-pill {
+  position: relative;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: 'JetBrains Mono', monospace;
+}
+.hud-pill:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.35);
+  transform: translateY(-1px);
+}
+.hud-pill.active {
+  background: rgba(255, 255, 255, 0.95);
+  color: #000000;
+  box-shadow: 0 0 18px rgba(255, 255, 255, 0.45);
+  border-color: #ffffff;
+}
+
+/* Compute Scanline Effect for Inference Playground */
+@keyframes scanline-pulse {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(1000%);
+    opacity: 0;
+  }
+}
+
+.animate-scanline {
+  animation: scanline-pulse 2.8s infinite linear;
+}
+
+@keyframes signal-ping {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.9);
+    opacity: 0.9;
+  }
+}
+
+.animate-signal {
+  animation: signal-ping 1.8s infinite ease-in-out;
+}
