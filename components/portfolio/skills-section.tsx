@@ -28,6 +28,8 @@ interface Domain {
   technologies: string[];
   projectApplication: string;
   terminalSample: string;
+  activeLearningFocus?: boolean;
+  activeLearningNote?: string;
 }
 
 export function SkillsSection() {
@@ -40,55 +42,67 @@ export function SkillsSection() {
 
   const domains: Domain[] = [
     {
-      id: "ai-prompt",
-      title: "AI & Prompt Engineering",
-      subtitle: "Large Language Models & Agentic Workflows",
-      icon: <Terminal className="w-5 h-5 text-white" />,
-      summary:
-        "Building production-grade workflows with frontier LLMs, structured prompting, and programmatic orchestration.",
-      skills: [
-        { name: "ChatGPT & Claude Advanced Workflows", level: "Production" },
-        { name: "Few-Shot Prompt Engineering & CoT", level: "Specialized" },
-        { name: "LLM API Integrations (OpenAI, Anthropic)", level: "Production" },
-        { name: "Local LLM Runtimes (Ollama, vLLM)", level: "Active Learning" },
-      ],
-      technologies: ["GPT-4o", "Claude 3.7 Sonnet", "Prompt Chaining", "Structured Outputs", "Context Window Optimization"],
-      projectApplication:
-        "Engineered automated code audit agents that validate AST syntax and suggest security refactorings using structured JSON outputs.",
-      terminalSample: "curl -X POST api.anthropic.com/v1/messages -H 'x-api-key: $KEY' ...",
-    },
-    {
       id: "prog-compute",
       title: "Programming & Compute",
       subtitle: "High-Performance Systems & GPU Acceleration",
       icon: <Cpu className="w-5 h-5 text-white" />,
+      activeLearningFocus: true,
+      activeLearningNote:
+        "Active learning in more competencies, that are actually tough and harder — mastering GPU warp primitives, shared memory tiling, and low-level C++20 systems.",
       summary:
-        "From high-level algorithmic logic in Python to low-level GPU acceleration with NVIDIA CUDA.",
+        "From high-level algorithmic logic in Python to low-level GPU acceleration with NVIDIA CUDA and parallel thread architectures.",
       skills: [
-        { name: "Python (Systems & Scripting)", level: "Primary Stack" },
-        { name: "CUDA (GPU Parallel Programming)", level: "Active Learning" },
-        { name: "C / C++ Foundations", level: "Systems" },
-        { name: "TypeScript & React Architecture", level: "Full-Stack" },
+        { name: "CUDA (GPU Parallel Programming & Kernels)", level: "Active Learning" },
+        { name: "Low-Level GPU Memory Tiling & Matrix GEMM", level: "Active Learning" },
+        { name: "Python (Systems & Numerical Scripting)", level: "Primary Stack" },
+        { name: "C / C++20 Systems Foundations", level: "Active Learning" },
+        { name: "TypeScript & Modern Web Architecture", level: "Full-Stack" },
       ],
-      technologies: ["Python 3.12+", "NVIDIA CUDA 12", "C++20", "TypeScript", "AsyncIO", "Multiprocessing"],
+      technologies: ["NVIDIA CUDA 12", "C++20", "Shared Memory Tiling", "Python 3.12+", "Warp Intrinsic Primitives", "AsyncIO", "Multiprocessing"],
       projectApplication:
         "Implemented GPU matrix multiplication kernels with shared memory tiling in CUDA, achieving measurable throughput gains over standard CPU executions.",
-      terminalSample: "nvcc -O3 -arch=sm_86 -Xcompiler -Wall kernel.cu -o matrix_cuda",
+      terminalSample: "nvcc -O3 -arch=sm_89 -Xcompiler -Wall kernel.cu -o matrix_cuda",
+    },
+    {
+      id: "ai-prompt",
+      title: "AI & Prompt Engineering",
+      subtitle: "Large Language Models & Agentic Workflows",
+      icon: <Terminal className="w-5 h-5 text-white" />,
+      activeLearningFocus: true,
+      activeLearningNote:
+        "Active learning in more competencies, that are actually tough and harder — diving into local LLM runtimes, KV-cache paging, and TensorRT-LLM.",
+      summary:
+        "Building production-grade workflows with frontier LLMs, structured prompting, local model runtimes, and programmatic agent orchestration.",
+      skills: [
+        { name: "Local LLM Runtimes (vLLM, Ollama, TensorRT-LLM)", level: "Active Learning" },
+        { name: "Autonomous Agent Tool Calling & Workflows", level: "Active Learning" },
+        { name: "ChatGPT & Claude Advanced Prompt Workflows", level: "Production" },
+        { name: "Few-Shot Chain-of-Thought & Reasoning", level: "Specialized" },
+        { name: "LLM API Integrations (OpenAI, Anthropic)", level: "Production" },
+      ],
+      technologies: ["GPT-4o", "Claude 3.7 Sonnet", "vLLM", "TensorRT-LLM", "Prompt Chaining", "Structured JSON Outputs"],
+      projectApplication:
+        "Engineered automated code audit agents that validate AST syntax and suggest security refactorings using structured JSON outputs.",
+      terminalSample: "curl -X POST api.anthropic.com/v1/messages -H 'x-api-key: $KEY' ...",
     },
     {
       id: "ml-ds",
       title: "ML & Data Science",
       subtitle: "Statistical Modeling & Feature Engineering",
       icon: <Database className="w-5 h-5 text-white" />,
+      activeLearningFocus: true,
+      activeLearningNote:
+        "Active learning in more competencies, that are actually tough and harder — custom PyTorch autograd tensors and loss landscape optimization.",
       summary:
         "Rigorous exploratory data analysis, mathematical modeling, and training reproducible machine learning pipelines.",
       skills: [
-        { name: "Pandas & NumPy Data Wrangling", level: "Expert" },
+        { name: "PyTorch Custom Tensors & Autograd Mechanics", level: "Active Learning" },
+        { name: "ML Math (Linear Algebra, Calculus & Probability)", level: "Academic Core" },
         { name: "Scikit-Learn Classifiers & Regressors", level: "Production" },
-        { name: "ML Math (Linear Algebra & Probability)", level: "Academic Core" },
+        { name: "Pandas & NumPy High-Perf Data Wrangling", level: "Expert" },
         { name: "Data Visualization (Matplotlib, Seaborn)", level: "Advanced" },
       ],
-      technologies: ["Pandas", "NumPy", "Scikit-Learn", "Matplotlib", "Seaborn", "JupyterLab", "Statsmodels"],
+      technologies: ["PyTorch", "NumPy", "Pandas", "Scikit-Learn", "Matplotlib", "Seaborn", "JupyterLab"],
       projectApplication:
         "Constructed predictive classification pipelines with automated k-fold cross-validation, hyperparameter tuning via GridSearchCV, and ROC/AUC metric tracking.",
       terminalSample: "python -m sklearn.pipeline --evaluate --cv=5 --dataset=telecom_churn.parquet",
@@ -101,8 +115,9 @@ export function SkillsSection() {
       summary:
         "Robust software development practices, version control hygiene, and containerized development setups.",
       skills: [
-        { name: "Git & GitHub Version Control", level: "Advanced" },
+        { name: "Git & GitHub Version Control Hygiene", level: "Advanced" },
         { name: "Linux / Bash Terminal Navigation", level: "Proficient" },
+        { name: "GPU Profiling with Nsight Systems Basics", level: "Active Learning" },
         { name: "VS Code & Remote SSH Development", level: "Primary IDE" },
         { name: "Vite, Node & Package Management", level: "Full-Stack" },
       ],
@@ -141,8 +156,12 @@ export function SkillsSection() {
             <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
               Tools, Runtimes &amp; <span className="kinetic-gradient-text">Competencies.</span>
             </h2>
-            <p className="text-sm sm:text-base text-neutral-400">
-              Interactive competency matrix. Click each card to expand deep toolchains, verification status, and real-world project deployments.
+            <p className="text-sm sm:text-base text-neutral-400 leading-relaxed">
+              Interactive competency matrix.{" "}
+              <span className="text-neutral-200 font-medium underline decoration-amber-400/50 underline-offset-4">
+                Active learning in more competencies, that are actually tough and harder
+              </span>{" "}
+              — tackling low-level GPU acceleration, custom CUDA memory tiling, and high-performance inference pipelines.
             </p>
           </div>
 
@@ -196,6 +215,15 @@ export function SkillsSection() {
                         >
                           {domain.skills.length} competencies
                         </Badge>
+                        {domain.activeLearningFocus && (
+                          <Badge
+                            variant="outline"
+                            className="text-[10px] font-mono border-amber-400/35 bg-amber-400/10 text-amber-300 py-0.5 px-2.5 rounded-full flex items-center gap-1.5 shadow-sm"
+                          >
+                            <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+                            <span>Active Learning</span>
+                          </Badge>
+                        )}
                       </div>
                       <p className="text-xs text-neutral-400 mt-1">{domain.subtitle}</p>
                     </div>
@@ -214,6 +242,14 @@ export function SkillsSection() {
                     </div>
                   </div>
                 </button>
+
+                {/* Active Learning Callout Banner if Domain has Active Learning Focus */}
+                {domain.activeLearningNote && (
+                  <div className="mx-6 sm:mx-7 mb-3.5 p-3 rounded-2xl bg-amber-400/[0.07] border border-amber-400/25 flex items-start gap-2.5 text-xs text-amber-200/90 font-mono">
+                    <Sparkles className="w-4 h-4 text-amber-400 shrink-0 mt-0.5 animate-pulse" />
+                    <span className="leading-relaxed">{domain.activeLearningNote}</span>
+                  </div>
+                )}
 
                 {/* Card Summary */}
                 <div className="px-6 sm:px-7 pb-4 text-xs sm:text-sm text-neutral-400 border-b border-white/5">
@@ -243,13 +279,16 @@ export function SkillsSection() {
                               <span>{skill.name}</span>
                             </span>
                             <span
-                              className={`text-[10px] font-mono px-2.5 py-0.5 rounded-full border shrink-0 ${
-                                skill.level === "Active Learning"
-                                  ? "bg-amber-400/10 text-amber-300 border-amber-400/30"
+                              className={`text-[10px] font-mono px-2.5 py-0.5 rounded-full border shrink-0 flex items-center gap-1.5 ${
+                                skill.level.includes("Active Learning")
+                                  ? "bg-amber-400/10 text-amber-300 border-amber-400/30 font-semibold"
                                   : "bg-white/10 text-neutral-200 border-white/15"
                               }`}
                             >
-                              {skill.level}
+                              {skill.level.includes("Active Learning") && (
+                                <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+                              )}
+                              <span>{skill.level}</span>
                             </span>
                           </div>
                         ))}

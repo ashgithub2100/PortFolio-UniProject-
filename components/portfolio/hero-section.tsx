@@ -3,430 +3,155 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
   ArrowRight,
+  Activity,
   Terminal,
+  Zap,
   Cpu,
   Sparkles,
-  Activity,
-  Zap,
-  Play,
-  RefreshCw,
-  Sliders,
-  CheckCircle2,
-  ChevronDown,
-  Layers,
 } from "lucide-react";
-import NeuralCoreCanvas, {
-  NeuralCoreCanvasRef,
-  VisualizerMode,
-} from "@/components/ui/neural-core-canvas";
+
+const ROTATING_TERMS = [
+  "AI & Compute.",
+  "CUDA Kernels.",
+  "Neural Networks.",
+  "LLM Systems.",
+  "High-Perf Code.",
+];
 
 export function HeroSection() {
-  // Visualizer mode & telemetry state
-  const [activeMode, setActiveMode] = React.useState<VisualizerMode>("synapse");
-  const [fps, setFps] = React.useState<number>(60);
-  const canvasRef = React.useRef<NeuralCoreCanvasRef>(null);
+  const [termIndex, setTermIndex] = React.useState(0);
+  const [isFading, setIsFading] = React.useState(false);
 
-  // 3D Card Tilt & Cursor Spotlight state
-  const cardRef = React.useRef<HTMLDivElement>(null);
-  const [cardTransform, setCardTransform] = React.useState("");
-  const [spotlightPos, setSpotlightPos] = React.useState({ x: 50, y: 50 });
+  // Smooth cyclic term transition
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setIsFading(true);
+      setTimeout(() => {
+        setTermIndex((prev) => (prev + 1) % ROTATING_TERMS.length);
+        setIsFading(false);
+      }, 300);
+    }, 3200);
 
-  // Interactive AI Inference Playground state
-  const [isInferenceOpen, setIsInferenceOpen] = React.useState<boolean>(false);
-  const [isRunningInference, setIsRunningInference] = React.useState<boolean>(false);
-  const [inferenceStep, setInferenceStep] = React.useState<number>(0);
-  const [inferenceMetric, setInferenceMetric] = React.useState({
-    latency: "11.2 ms",
-    throughput: "94.6 tok/s",
-    vram: "3.8 GB",
-    utilization: "96.4%",
-  });
-
-  // Handle Card 3D tilt on mouse movement
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-
-    const rotateX = ((y - centerY) / centerY) * -3.5;
-    const rotateY = ((x - centerX) / centerX) * 3.5;
-
-    setCardTransform(
-      `perspective(1200px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg)`
-    );
-    setSpotlightPos({
-      x: (x / rect.width) * 100,
-      y: (y / rect.height) * 100,
-    });
-  };
-
-  const handleMouseLeave = () => {
-    setCardTransform("perspective(1200px) rotateX(0deg) rotateY(0deg)");
-  };
-
-  // Trigger Shockwave in canvas
-  const handleTriggerShockwave = () => {
-    canvasRef.current?.triggerShockwave();
-  };
-
-  // Run simulated AI Forward Pass
-  const handleRunInference = () => {
-    if (isRunningInference) return;
-    setIsRunningInference(true);
-    setInferenceStep(1);
-
-    setTimeout(() => setInferenceStep(2), 650);
-    setTimeout(() => {
-      setInferenceStep(3);
-      canvasRef.current?.triggerShockwave();
-    }, 1300);
-    setTimeout(() => {
-      setInferenceStep(4);
-      setIsRunningInference(false);
-      setInferenceMetric({
-        latency: `${(9.5 + Math.random() * 3).toFixed(1)} ms`,
-        throughput: `${(88 + Math.random() * 15).toFixed(1)} tok/s`,
-        vram: `${(3.6 + Math.random() * 0.5).toFixed(1)} GB`,
-        utilization: `${(94 + Math.random() * 5).toFixed(1)}%`,
-      });
-    }, 2000);
-  };
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <section id="hero" className="relative pt-28 pb-10 md:pt-36 md:pb-16 overflow-hidden">
-      <div className="container mx-auto px-4 sm:px-6 hero-card-perspective">
-        {/* Main Hero Card Container with 3D Tilt & Cyber Spotlight */}
-        <div
-          ref={cardRef}
-          onMouseMove={handleMouseMove}
-          onMouseLeave={handleMouseLeave}
-          style={{ transform: cardTransform }}
-          className="hero-command-card relative rounded-3xl border border-white/20 bg-black/80 backdrop-blur-2xl shadow-[0_30px_90px_-20px_rgba(0,0,0,0.98)] overflow-hidden transition-transform duration-200 ease-out"
-        >
-          {/* Dynamic Cursor-Following Radial Spotlight */}
-          <div
-            className="absolute inset-0 pointer-events-none transition-opacity duration-500"
-            style={{
-              background: `radial-gradient(circle 500px at ${spotlightPos.x}% ${spotlightPos.y}%, rgba(255, 255, 255, 0.08), transparent 70%)`,
-            }}
-          />
+    <section
+      id="hero"
+      className="relative pt-32 pb-14 md:pt-44 md:pb-20 overflow-hidden pointer-events-none"
+    >
+      {/* Subtle ambient lighting aura that lets the KineticGrid shine through */}
+      <div className="absolute top-1/2 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[380px] bg-white/[0.035] rounded-full blur-[140px] pointer-events-none" />
 
-          {/* Cyber Grid Accent */}
-          <div className="absolute inset-0 bg-cyber-grid pointer-events-none opacity-20" />
+      <div className="container mx-auto px-6 sm:px-10 md:px-14 lg:px-16 max-w-6xl relative z-10 text-left">
+        {/* Top Status Strip */}
+        <div className="flex flex-wrap items-center justify-start gap-2.5 mb-7 pointer-events-auto">
+          {/* Availability Pill */}
+          <Badge
+            variant="outline"
+            className="gap-2.5 py-1.5 px-4 border-white/20 bg-black/40 text-white shadow-[0_0_20px_rgba(255,255,255,0.06)] backdrop-blur-md rounded-full transition-all hover:border-white/40 hover:bg-white/5 cursor-default animate-float"
+          >
+            <span className="w-2 h-2 rounded-full bg-white beacon-pulse" />
+            <span className="text-xs sm:text-sm font-medium tracking-wide">
+              Available for internships &amp; collaborations
+            </span>
+          </Badge>
 
-          {/* Embedded Interactive 3D Canvas Background Layer */}
-          <div className="absolute inset-0 pointer-events-auto opacity-70 hover:opacity-90 transition-opacity duration-700">
-            <NeuralCoreCanvas
-              ref={canvasRef}
-              mode={activeMode}
-              onFpsUpdate={setFps}
-              interactive={true}
-              className="w-full h-full"
-            />
+          {/* Interactive Grid Telemetry Pill */}
+          <div className="hidden sm:inline-flex items-center gap-2 text-xs text-neutral-400 font-mono bg-black/40 border border-white/15 px-3.5 py-1.5 rounded-full backdrop-blur-md hover:border-white/35 transition-all">
+            <Activity className="w-3.5 h-3.5 text-white animate-pulse" />
+            <span>Interactive Kinetic Mesh &bull; 60 FPS</span>
+          </div>
+        </div>
+
+        {/* Main Headline with Smooth Dynamic Rotating Term */}
+        <div className="max-w-4xl space-y-6 pointer-events-auto text-left">
+          <h1 className="text-left text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-white leading-[1.06] drop-shadow-md">
+            Engineering Intelligent Systems with{" "}
+            <span className="inline-block mt-1 sm:mt-0">
+              <span
+                className={`kinetic-gradient-text inline-block transition-all duration-300 transform ${isFading
+                    ? "opacity-0 -translate-y-3 scale-95"
+                    : "opacity-100 translate-y-0 scale-100"
+                  }`}
+              >
+                {ROTATING_TERMS[termIndex]}
+              </span>
+            </span>
+          </h1>
+
+          {/* Specialization Role Tag */}
+          <div className="font-mono text-xs sm:text-sm text-neutral-300 flex items-center justify-start gap-2 pt-1">
+            <span className="opacity-40">//</span>
+            <span className="bg-white/5 border border-white/15 px-4 py-1.5 rounded-full backdrop-blur-md hover:border-white/30 transition-all">
+              AI &amp; Data Science (AIDS) / CSE Student — Developer &amp; Technologist
+            </span>
           </div>
 
-          {/* Foreground Hero Content Layer */}
-          <div className="relative z-10 flex min-h-[620px] md:min-h-[680px] flex-col justify-between py-10 px-5 sm:px-8 md:px-12 text-center pointer-events-none">
-            {/* Top Row: Availability Badge & Interactive 3D HUD Dock */}
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pointer-events-auto">
-              {/* Left Availability Pill */}
-              <Badge
-                variant="outline"
-                className="gap-2 py-1.5 px-4 border-white/20 bg-black/60 text-white shadow-lg backdrop-blur-xl rounded-full animate-float"
+          {/* Bio Pitch */}
+          <p className="max-w-2xl text-left text-sm sm:text-base md:text-lg text-neutral-300/90 leading-relaxed drop-shadow">
+            Computer Science student specializing in AI &amp; Data Science, mastering machine learning pipelines, GPU-accelerated computing with CUDA, and architecting high-performance modern software.
+          </p>
+
+          {/* Primary Action Buttons */}
+          <div className="flex flex-wrap items-center justify-start gap-4 pt-3">
+            <a href="#projects">
+              <Button
+                size="lg"
+                className="btn-animated group gap-2.5 text-sm sm:text-base font-semibold bg-white text-black hover:bg-neutral-100 shadow-[0_0_25px_rgba(255,255,255,0.35)] hover:shadow-[0_0_40px_rgba(255,255,255,0.6)] cursor-pointer transition-all"
               >
-                <span className="w-2 h-2 rounded-full bg-white beacon-pulse" />
-                <span className="tracking-wide text-xs sm:text-sm">
-                  Available for internships &amp; collaborations
-                </span>
-              </Badge>
+                <span>Explore Projects</span>
+                <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1.5" />
+              </Button>
+            </a>
 
-              {/* Right Interactive Visualizer HUD Dock */}
-              <div className="flex flex-wrap items-center justify-center gap-1.5 p-1 rounded-full border border-white/20 bg-black/75 backdrop-blur-xl shadow-md text-xs font-mono">
-                <span className="px-2.5 py-1 text-neutral-400 font-semibold flex items-center gap-1.5">
-                  <Activity className="w-3.5 h-3.5 text-white animate-pulse" />
-                  <span>{fps} FPS</span>
-                </span>
+            <a href="#contact">
+              <Button
+                variant="outline"
+                size="lg"
+                className="btn-animated text-sm sm:text-base border-white/20 bg-black/40 text-white hover:bg-white/15 hover:border-white/40 backdrop-blur-md cursor-pointer transition-all"
+              >
+                Get In Touch
+              </Button>
+            </a>
+          </div>
 
-                <div className="h-4 w-px bg-white/15" />
-
-                {/* Mode Selector Buttons */}
-                <button
-                  type="button"
-                  onClick={() => setActiveMode("synapse")}
-                  className={`hud-pill px-3 py-1 rounded-full border border-transparent cursor-pointer ${
-                    activeMode === "synapse" ? "active" : "text-neutral-300"
-                  }`}
-                  title="Switch to Neural Synapse Mode"
-                >
-                  Synapse
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setActiveMode("tensor")}
-                  className={`hud-pill px-3 py-1 rounded-full border border-transparent cursor-pointer ${
-                    activeMode === "tensor" ? "active" : "text-neutral-300"
-                  }`}
-                  title="Switch to CUDA Tensor Lattice Mode"
-                >
-                  CUDA Tensor
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setActiveMode("vortex")}
-                  className={`hud-pill px-3 py-1 rounded-full border border-transparent cursor-pointer ${
-                    activeMode === "vortex" ? "active" : "text-neutral-300"
-                  }`}
-                  title="Switch to Quantum Swarm Mode"
-                >
-                  Vortex
-                </button>
-
-                <div className="h-4 w-px bg-white/15" />
-
-                {/* Shockwave Blast Trigger Button */}
-                <button
-                  type="button"
-                  onClick={handleTriggerShockwave}
-                  className="hud-pill px-2.5 py-1 rounded-full text-white hover:text-white border border-white/15 hover:border-white/40 cursor-pointer flex items-center gap-1 bg-white/5 transition-all"
-                  title="Trigger Particle Shockwave Impulse"
-                >
-                  <Zap className="w-3 h-3 text-white" />
-                  <span className="hidden md:inline">Shockwave</span>
-                </button>
+          {/* Floating Translucent Telemetry Chips (Passes grid visibility through completely) */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl pt-8">
+            <div className="group p-4 rounded-2xl bg-black/30 border border-white/15 backdrop-blur-md hover:border-white/40 hover:bg-white/[0.07] transition-all duration-300 card-interactive cursor-default text-left flex items-center gap-3.5 shadow-sm">
+              <div className="w-10 h-10 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center text-white group-hover:bg-white group-hover:text-black transition-all">
+                <Terminal className="w-5 h-5" />
               </div>
-            </div>
-
-            {/* Headline & Central Content */}
-            <div className="max-w-3xl mx-auto space-y-6 my-auto pt-6 pb-4 pointer-events-auto">
-              <h1 className="text-balance text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white leading-[1.06] drop-shadow-md">
-                Engineering Intelligent Systems with{" "}
-                <span className="kinetic-gradient-text">AI &amp; Compute.</span>
-              </h1>
-
-              {/* Specialization Tagline */}
-              <div className="font-mono text-xs sm:text-sm text-neutral-300 flex items-center justify-center gap-2">
-                <span className="opacity-40">//</span>
-                <span className="bg-white/5 border border-white/10 px-3.5 py-1 rounded-full backdrop-blur-md">
-                  AI &amp; Data Science (AIDS) / CSE Student — Developer &amp; Technologist
-                </span>
-              </div>
-
-              {/* Bio Pitch */}
-              <p className="max-w-2xl mx-auto text-balance text-xs sm:text-sm md:text-base text-neutral-300/90 leading-relaxed drop-shadow">
-                Computer Science student specializing in AI &amp; Data Science, mastering machine learning pipelines, GPU-accelerated computing with CUDA, and architecting high-performance modern software.
-              </p>
-
-              {/* Primary Actions & Live Inference Playground Toggle */}
-              <div className="flex flex-wrap items-center justify-center gap-3.5 pt-2">
-                <a href="#projects">
-                  <Button
-                    size="lg"
-                    className="btn-animated group gap-2.5 text-sm sm:text-base font-semibold bg-white text-black hover:bg-neutral-100 shadow-[0_0_25px_rgba(255,255,255,0.35)] hover:shadow-[0_0_40px_rgba(255,255,255,0.6)] cursor-pointer"
-                  >
-                    <span>Explore Projects</span>
-                    <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1.5" />
-                  </Button>
-                </a>
-
-                <a href="#contact">
-                  <Button
-                    variant="outline"
-                    size="lg"
-                    className="btn-animated text-sm sm:text-base border-white/25 bg-black/60 text-white hover:bg-white/15 backdrop-blur-md cursor-pointer"
-                  >
-                    Get In Touch
-                  </Button>
-                </a>
-
-                {/* Interactive Inference Playground Trigger Button */}
-                <Button
-                  variant="outline"
-                  size="lg"
-                  onClick={() => setIsInferenceOpen(!isInferenceOpen)}
-                  className={`btn-animated text-sm font-mono gap-2 border-white/20 backdrop-blur-md cursor-pointer ${
-                    isInferenceOpen
-                      ? "bg-white text-black border-white shadow-[0_0_20px_rgba(255,255,255,0.4)]"
-                      : "bg-white/10 text-white hover:bg-white/20"
-                  }`}
-                >
-                  <Cpu className="w-4 h-4 animate-spin" style={{ animationDuration: "10s" }} />
-                  <span>{isInferenceOpen ? "Close Inference Lab" : "Simulate AI Inference"}</span>
-                  <ChevronDown
-                    className={`w-3.5 h-3.5 transition-transform duration-300 ${
-                      isInferenceOpen ? "rotate-180" : ""
-                    }`}
-                  />
-                </Button>
-              </div>
-
-              {/* Interactive AI Inference & Compute Simulation Drawer */}
-              {isInferenceOpen && (
-                <div className="mt-6 text-left max-w-2xl mx-auto rounded-2xl border border-white/20 bg-black/90 backdrop-blur-2xl p-5 shadow-2xl space-y-4 animate-in fade-in slide-in-from-top-4 duration-300">
-                  <div className="flex items-center justify-between border-b border-white/10 pb-3">
-                    <div className="flex items-center gap-2 text-xs font-mono text-white font-bold">
-                      <Terminal className="w-4 h-4 text-white animate-pulse" />
-                      <span>LIVE CUDA &amp; NEURAL FORWARD-PASS BENCHMARK</span>
-                    </div>
-
-                    <Button
-                      size="sm"
-                      onClick={handleRunInference}
-                      disabled={isRunningInference}
-                      className="bg-white text-black hover:bg-neutral-200 text-xs font-mono font-bold h-7 px-3 gap-1.5 cursor-pointer shadow-sm disabled:opacity-50"
-                    >
-                      {isRunningInference ? (
-                        <RefreshCw className="w-3 h-3 animate-spin" />
-                      ) : (
-                        <Play className="w-3 h-3 fill-current" />
-                      )}
-                      <span>{isRunningInference ? "Executing..." : "Run Pipeline"}</span>
-                    </Button>
-                  </div>
-
-                  {/* 4-Step Animated Pipeline Progress */}
-                  <div className="grid grid-cols-4 gap-2 text-[10px] font-mono">
-                    <div
-                      className={`p-2 rounded-lg border transition-all ${
-                        inferenceStep >= 1
-                          ? "border-white/40 bg-white/15 text-white"
-                          : "border-white/10 bg-white/5 text-neutral-500"
-                      }`}
-                    >
-                      <div className="font-bold flex items-center gap-1">
-                        {inferenceStep > 1 && <CheckCircle2 className="w-3 h-3 text-white" />}
-                        <span>1. TOKENIZE</span>
-                      </div>
-                      <div className="text-[9px] text-neutral-400 mt-0.5">BPE Byte-Pair</div>
-                    </div>
-
-                    <div
-                      className={`p-2 rounded-lg border transition-all ${
-                        inferenceStep >= 2
-                          ? "border-white/40 bg-white/15 text-white"
-                          : "border-white/10 bg-white/5 text-neutral-500"
-                      }`}
-                    >
-                      <div className="font-bold flex items-center gap-1">
-                        {inferenceStep > 2 && <CheckCircle2 className="w-3 h-3 text-white" />}
-                        <span>2. ATTENTION</span>
-                      </div>
-                      <div className="text-[9px] text-neutral-400 mt-0.5">Q·K^T / √d</div>
-                    </div>
-
-                    <div
-                      className={`p-2 rounded-lg border transition-all ${
-                        inferenceStep >= 3
-                          ? "border-white/40 bg-white/15 text-white"
-                          : "border-white/10 bg-white/5 text-neutral-500"
-                      }`}
-                    >
-                      <div className="font-bold flex items-center gap-1">
-                        {inferenceStep > 3 && <CheckCircle2 className="w-3 h-3 text-white" />}
-                        <span>3. CUDA CORE</span>
-                      </div>
-                      <div className="text-[9px] text-neutral-400 mt-0.5">GEMM FP16</div>
-                    </div>
-
-                    <div
-                      className={`p-2 rounded-lg border transition-all ${
-                        inferenceStep >= 4
-                          ? "border-white/40 bg-white/15 text-white"
-                          : "border-white/10 bg-white/5 text-neutral-500"
-                      }`}
-                    >
-                      <div className="font-bold flex items-center gap-1">
-                        {inferenceStep >= 4 && <CheckCircle2 className="w-3 h-3 text-white" />}
-                        <span>4. OUTPUT</span>
-                      </div>
-                      <div className="text-[9px] text-neutral-400 mt-0.5">Stream Stream</div>
-                    </div>
-                  </div>
-
-                  {/* Terminal Execution Log Output */}
-                  <div className="bg-black/80 rounded-xl p-3 border border-white/10 font-mono text-xs text-neutral-300 space-y-1">
-                    <div className="text-neutral-500 text-[11px]">
-                      $ nvcc --ptx -arch=sm_89 attention_kernel.cu &amp;&amp; python3 run_inference.py
-                    </div>
-                    {inferenceStep === 0 && (
-                      <div className="text-neutral-400 italic">
-                        // Ready. Click &quot;Run Pipeline&quot; to execute real-time CUDA tensor dispatch.
-                      </div>
-                    )}
-                    {inferenceStep >= 1 && (
-                      <div className="text-neutral-300 animate-in fade-in duration-200">
-                        [1/4] Embedding 1,024 context tokens into latent vector space (d=4096)...
-                      </div>
-                    )}
-                    {inferenceStep >= 2 && (
-                      <div className="text-neutral-200 animate-in fade-in duration-200">
-                        [2/4] Multi-head self-attention: 32 heads active with FlashAttention-2 speedup.
-                      </div>
-                    )}
-                    {inferenceStep >= 3 && (
-                      <div className="text-white font-semibold animate-in fade-in duration-200 flex items-center gap-2">
-                        <span className="w-2 h-2 rounded-full bg-white animate-ping" />
-                        <span>[3/4] GPU Tensor Core warp tile: 64 SMs computing FP16 GEMM...</span>
-                      </div>
-                    )}
-                    {inferenceStep >= 4 && (
-                      <div className="text-white font-bold bg-white/10 p-2 rounded-lg border border-white/20 animate-in fade-in duration-300">
-                        [SUCCESS] Forward-pass completed. Pipeline converged with zero memory leaks.
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Live Telemetry Gauges */}
-                  <div className="grid grid-cols-4 gap-2 text-center pt-1 border-t border-white/10">
-                    <div className="bg-white/5 rounded-lg p-1.5 border border-white/10">
-                      <div className="font-mono text-xs font-bold text-white">
-                        {inferenceMetric.latency}
-                      </div>
-                      <div className="text-[10px] text-neutral-400">Latency</div>
-                    </div>
-                    <div className="bg-white/5 rounded-lg p-1.5 border border-white/10">
-                      <div className="font-mono text-xs font-bold text-white">
-                        {inferenceMetric.throughput}
-                      </div>
-                      <div className="text-[10px] text-neutral-400">Throughput</div>
-                    </div>
-                    <div className="bg-white/5 rounded-lg p-1.5 border border-white/10">
-                      <div className="font-mono text-xs font-bold text-white">
-                        {inferenceMetric.vram}
-                      </div>
-                      <div className="text-[10px] text-neutral-400">VRAM Usage</div>
-                    </div>
-                    <div className="bg-white/5 rounded-lg p-1.5 border border-white/10">
-                      <div className="font-mono text-xs font-bold text-white">
-                        {inferenceMetric.utilization}
-                      </div>
-                      <div className="text-[10px] text-neutral-400">GPU SM Load</div>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Bottom Quick Telemetry Stats with Card Physics */}
-            <div className="w-full max-w-2xl mx-auto pt-6 border-t border-white/15 grid grid-cols-3 gap-3.5 text-center pointer-events-auto">
-              <div className="bg-black/60 backdrop-blur-xl rounded-2xl p-3.5 border border-white/15 card-interactive cursor-default hover:border-white/35">
-                <div className="font-mono text-xs sm:text-sm font-bold text-white flex items-center justify-center gap-1">
+              <div>
+                <div className="font-mono text-xs font-bold text-white flex items-center gap-1.5">
                   CSE <span className="text-neutral-400">AIDS</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                 </div>
                 <div className="text-[11px] text-neutral-400 mt-0.5">Specialization</div>
               </div>
-              <div className="bg-black/60 backdrop-blur-xl rounded-2xl p-3.5 border border-white/15 card-interactive cursor-default hover:border-white/35">
-                <div className="font-mono text-xs sm:text-sm font-bold text-white flex items-center justify-center gap-1">
+            </div>
+
+            <div className="group p-4 rounded-2xl bg-black/30 border border-white/15 backdrop-blur-md hover:border-white/40 hover:bg-white/[0.07] transition-all duration-300 card-interactive cursor-default text-left flex items-center gap-3.5 shadow-sm">
+              <div className="w-10 h-10 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center text-white group-hover:bg-white group-hover:text-black transition-all">
+                <Zap className="w-5 h-5" />
+              </div>
+              <div>
+                <div className="font-mono text-xs font-bold text-white flex items-center gap-1.5">
                   CUDA <span className="text-neutral-400">+</span> ML
+                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
                 </div>
                 <div className="text-[11px] text-neutral-400 mt-0.5">Compute Focus</div>
               </div>
-              <div className="bg-black/60 backdrop-blur-xl rounded-2xl p-3.5 border border-white/15 card-interactive cursor-default hover:border-white/35">
-                <div className="font-mono text-xs sm:text-sm font-bold text-white flex items-center justify-center gap-1">
+            </div>
+
+            <div className="group p-4 rounded-2xl bg-black/30 border border-white/15 backdrop-blur-md hover:border-white/40 hover:bg-white/[0.07] transition-all duration-300 card-interactive cursor-default text-left flex items-center gap-3.5 shadow-sm">
+              <div className="w-10 h-10 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center text-white group-hover:bg-white group-hover:text-black transition-all">
+                <Cpu className="w-5 h-5" />
+              </div>
+              <div>
+                <div className="font-mono text-xs font-bold text-white flex items-center gap-1.5">
                   Python <span className="text-neutral-400">&amp;</span> LLMs
+                  <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
                 </div>
                 <div className="text-[11px] text-neutral-400 mt-0.5">Core Tooling</div>
               </div>
