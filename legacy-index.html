@@ -8,16 +8,30 @@
   <meta name="author" content="Aditya Sharma">
   <title>Aditya Sharma | AI & Data Science Developer</title>
 
-  <!-- Google Fonts: Syne (Display), Plus Jakarta Sans (Body), JetBrains Mono (Code) -->
+  <!-- Preconnect and DNS prefetch for critical external origins -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+  <link rel="dns-prefetch" href="https://images.unsplash.com">
 
-  <!-- Core Stylesheets -->
+  <!-- Optimized Google Fonts: Streamlined weights with display=swap to eliminate FOIT -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@400;600;700&family=Syne:wght@700;800&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@400;600;700&family=Syne:wght@700;800&display=swap" media="print" onload="this.media='all'">
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@400;600;700&family=Syne:wght@700;800&display=swap">
+  </noscript>
+
+  <!-- Core Critical Stylesheets -->
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/components.css">
-  <link rel="stylesheet" href="css/animations.css">
-  <link rel="stylesheet" href="css/image-stream-hero.css">
+
+  <!-- Non-blocking Deferred Secondary Stylesheets -->
+  <link rel="preload" as="style" href="css/animations.css" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" as="style" href="css/image-stream-hero.css" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/image-stream-hero.css">
+  </noscript>
 
   <!-- Favicon / SVG Icon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='25' fill='%2307090e'/><text x='50%' y='62%' font-size='50' font-family='monospace' font-weight='bold' fill='%2300f5a0' text-anchor='middle'>AS</text></svg>">
@@ -846,18 +860,18 @@
     <span id="toast-message">Email copied to clipboard!</span>
   </div>
 
-  <!-- Three.js (r128 CDN) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <!-- Three.js (r128 CDN) - Deferred to eliminate main-thread parser blocking -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
 
-  <!-- Portfolio Scripts (Cybernetic Stack) -->
-  <script src="js/audio.js"></script>
-  <script src="js/ambient-particles.js"></script>
-  <script src="js/three-scene.js"></script>
-  <script src="js/skills-3d.js"></script>
-  <script src="js/terminal.js"></script>
-  <script src="js/project-simulators.js"></script>
-  <script src="js/cursor.js"></script>
-  <script src="js/image-stream-hero.js"></script>
-  <script src="js/main.js"></script>
+  <!-- Portfolio Scripts (Cybernetic Stack) - Deferred for instant First Contentful Paint -->
+  <script src="js/audio.js" defer></script>
+  <script src="js/ambient-particles.js" defer></script>
+  <script src="js/three-scene.js" defer></script>
+  <script src="js/skills-3d.js" defer></script>
+  <script src="js/terminal.js" defer></script>
+  <script src="js/project-simulators.js" defer></script>
+  <script src="js/cursor.js" defer></script>
+  <script src="js/image-stream-hero.js" defer></script>
+  <script src="js/main.js" defer></script>
 </body>
 </html>

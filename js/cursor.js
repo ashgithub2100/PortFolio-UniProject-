@@ -26,25 +26,39 @@
   let outlineX = -100;
   let outlineY = -100;
 
+  let isMoving = false;
+  let cursorRafId = null;
+
   window.addEventListener('mousemove', (e) => {
     mouseX = e.clientX;
     mouseY = e.clientY;
 
     cursorDot.style.left = `${mouseX}px`;
     cursorDot.style.top = `${mouseY}px`;
+
+    if (!isMoving) {
+      isMoving = true;
+      cursorRafId = requestAnimationFrame(renderCursor);
+    }
   }, { passive: true });
 
-  // Smooth lerp loop
+  // Smooth lerp loop that stops cleanly when idle
   function renderCursor() {
-    outlineX += (mouseX - outlineX) * 0.18;
-    outlineY += (mouseY - outlineY) * 0.18;
+    const dx = mouseX - outlineX;
+    const dy = mouseY - outlineY;
+    outlineX += dx * 0.18;
+    outlineY += dy * 0.18;
 
     cursorOutline.style.left = `${outlineX}px`;
     cursorOutline.style.top = `${outlineY}px`;
 
-    requestAnimationFrame(renderCursor);
+    if (Math.abs(dx) > 0.25 || Math.abs(dy) > 0.25) {
+      cursorRafId = requestAnimationFrame(renderCursor);
+    } else {
+      isMoving = false;
+      cursorRafId = null;
+    }
   }
-  requestAnimationFrame(renderCursor);
 
   // Click Spark Micro-burst
   function createClickSparks(x, y) {
@@ -71,11 +85,11 @@
   window.addEventListener('mousedown', (e) => {
     cursorOutline.classList.add('is-clicking');
     createClickSparks(e.clientX, e.clientY);
-  });
+  }, { passive: true });
 
   window.addEventListener('mouseup', () => {
     cursorOutline.classList.remove('is-clicking');
-  });
+  }, { passive: true });
 
   // Hover detection for interactive targets
   const interactiveSelector = 'a, button, .btn, .bento-card, .project-card, .skill-domain-card, .contact-channel-item, .tag-pill, .modal-close-btn, .copy-email-btn, .hud-btn, .sim-chip';

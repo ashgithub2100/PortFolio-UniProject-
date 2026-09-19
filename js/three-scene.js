@@ -10,6 +10,7 @@
  */
 
 (function initAdvancedThreeScene() {
+  if (typeof THREE === 'undefined') return;
   const container = document.getElementById('hero-3d-canvas-container');
   if (!container) return;
 
@@ -404,7 +405,7 @@
   window.addEventListener('touchmove', (e) => {
     if (e.touches.length === 1) onPointerMove(e.touches[0]);
   }, { passive: true });
-  window.addEventListener('touchend', onPointerUp);
+  window.addEventListener('touchend', onPointerUp, { passive: true });
 
   container.addEventListener('click', triggerShockwave);
 
@@ -417,13 +418,34 @@
     camera.updateProjectionMatrix();
     renderer.setSize(w, h);
   }
-  window.addEventListener('resize', onWindowResize);
+  window.addEventListener('resize', onWindowResize, { passive: true });
 
-  // IntersectionObserver performance pause
+  // IntersectionObserver performance pause - completely halts rAF when off-screen
   let isVisible = true;
+  let animId = null;
+
+  function startAnimation() {
+    if (!animId) {
+      clock.start();
+      animate();
+    }
+  }
+
+  function stopAnimation() {
+    if (animId) {
+      cancelAnimationFrame(animId);
+      animId = null;
+    }
+  }
+
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       isVisible = entry.isIntersecting;
+      if (isVisible) {
+        startAnimation();
+      } else {
+        stopAnimation();
+      }
     });
   }, { threshold: 0.05 });
   observer.observe(container);
@@ -517,8 +539,11 @@
   const fpsDisplay = document.getElementById('hud-telemetry-fps');
 
   function animate() {
-    requestAnimationFrame(animate);
-    if (!isVisible) return;
+    if (!isVisible) {
+      animId = null;
+      return;
+    }
+    animId = requestAnimationFrame(animate);
 
     const delta = clock.getDelta();
     const elapsedTime = clock.getElapsedTime();
@@ -630,5 +655,5 @@
     renderer.render(scene, camera);
   }
 
-  animate();
+  startAnimation();
 })();

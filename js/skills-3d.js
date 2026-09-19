@@ -143,7 +143,7 @@
     }
   }, { passive: true });
 
-  window.addEventListener('mouseup', () => { isDragging = false; });
+  window.addEventListener('mouseup', () => { isDragging = false; }, { passive: true });
 
   // Touch Support
   canvas.addEventListener('touchstart', (e) => {
@@ -165,7 +165,7 @@
     }
   }, { passive: true });
 
-  window.addEventListener('touchend', () => { isDragging = false; });
+  window.addEventListener('touchend', () => { isDragging = false; }, { passive: true });
 
   // Telemetry Card in UI
   function updateTelemetryCard(node) {
@@ -183,36 +183,75 @@
       return;
     }
 
+    const catBadgeClass = {
+      'Core': 'tag-emerald',
+      'GPU': 'tag-amber',
+      'Deep Learning': 'tag-cyan',
+      'ML': 'tag-emerald',
+      'AI': 'tag-purple',
+      'Data': 'tag-cyan',
+      'Workflow': 'tag-emerald',
+      'Systems': 'tag-amber'
+    }[node.cat] || 'tag-emerald';
+
     card.innerHTML = `
       <div class="skill-holo-active">
         <div class="holo-header">
-          <span class="tag-pill tag-emerald">${node.cat}</span>
+          <span class="holo-title">${node.name}</span>
+          <span class="tag-pill ${catBadgeClass}">${node.cat}</span>
+        </div>
+        <div class="holo-stat-row">
+          <span class="holo-stat-label">Proficiency Level</span>
           <span class="holo-stat-val">${node.level}</span>
         </div>
-        <h4 class="holo-name">${node.name}</h4>
+        <div class="holo-progress-bar">
+          <div class="holo-progress-fill" style="width: ${node.level === 'Learning' ? '65%' : node.level}"></div>
+        </div>
         <p class="holo-desc">${node.desc}</p>
-        <div class="holo-synapse-info">
-          <span>Connected Synapses:</span>
-          <div class="holo-chips">
-            ${node.connections.map(cIdx => `<span class="holo-chip">${skillsData[cIdx].name}</span>`).join('')}
-          </div>
+        <div class="holo-connections-tag">
+          <span class="holo-dot"></span>
+          <span>${node.connections.length} Neural Interconnections</span>
         </div>
       </div>
     `;
   }
 
-  // Animation Loop
+  // Animation Loop with lazy IntersectionObserver
   const fov = 320;
-  let isVisible = true;
+  let isVisible = false;
+  let skillsAnimId = null;
+
+  function startSkillsLoop() {
+    if (!skillsAnimId) {
+      skillsAnimId = requestAnimationFrame(draw);
+    }
+  }
+
+  function stopSkillsLoop() {
+    if (skillsAnimId) {
+      cancelAnimationFrame(skillsAnimId);
+      skillsAnimId = null;
+    }
+  }
 
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => { isVisible = e.isIntersecting; });
-  }, { threshold: 0.1 });
+    entries.forEach(e => {
+      isVisible = e.isIntersecting;
+      if (isVisible) {
+        startSkillsLoop();
+      } else {
+        stopSkillsLoop();
+      }
+    });
+  }, { threshold: 0.05 });
   observer.observe(container);
 
   function draw() {
-    requestAnimationFrame(draw);
-    if (!isVisible) return;
+    if (!isVisible) {
+      skillsAnimId = null;
+      return;
+    }
+    skillsAnimId = requestAnimationFrame(draw);
 
     ctx.clearRect(0, 0, width, height);
 
@@ -299,6 +338,5 @@
     });
   }
 
-  draw();
   updateTelemetryCard(null);
 })();
