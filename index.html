@@ -41,7 +41,39 @@
   <body class="bg-[#07090e] text-[#f8fafc]">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    <script src="https://cdn.botpress.cloud/webchat/v5.0/inject.js"></script>
-    <script src="https://files.bpcontent.cloud/2026/09/19/04/20260919043446-5HKTUPO1.js" defer></script>
+
+    <!-- Botpress Chatbot: Lazy-loaded on first user interaction or idle to eliminate main thread freeze -->
+    <script>
+      (function() {
+        let botpressLoaded = false;
+        function loadBotpress() {
+          if (botpressLoaded) return;
+          botpressLoaded = true;
+          ['scroll', 'mousemove', 'touchstart', 'keydown'].forEach(evt => 
+            window.removeEventListener(evt, loadBotpress, { passive: true })
+          );
+          const s1 = document.createElement('script');
+          s1.src = 'https://cdn.botpress.cloud/webchat/v5.0/inject.js';
+          s1.async = true;
+          s1.onload = function() {
+            const s2 = document.createElement('script');
+            s2.src = 'https://files.bpcontent.cloud/2026/09/19/04/20260919043446-5HKTUPO1.js';
+            s2.defer = true;
+            document.body.appendChild(s2);
+          };
+          document.body.appendChild(s1);
+        }
+
+        ['scroll', 'mousemove', 'touchstart', 'keydown'].forEach(evt => 
+          window.addEventListener(evt, loadBotpress, { passive: true, once: true })
+        );
+
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(() => setTimeout(loadBotpress, 3500));
+        } else {
+          setTimeout(loadBotpress, 4000);
+        }
+      })();
+    </script>
   </body>
 </html>

@@ -860,20 +860,69 @@
     <span id="toast-message">Email copied to clipboard!</span>
   </div>
 
-  <!-- Three.js (r128 CDN) - Deferred to eliminate main-thread parser blocking -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
-
-  <!-- Portfolio Scripts (Cybernetic Stack) - Deferred for instant First Contentful Paint -->
+  <!-- Core Interactive Scripts (Non-blocking & Deferred) -->
   <script src="js/audio.js" defer></script>
   <script src="js/ambient-particles.js" defer></script>
-  <script src="js/three-scene.js" defer></script>
   <script src="js/skills-3d.js" defer></script>
   <script src="js/terminal.js" defer></script>
-  <script src="js/project-simulators.js" defer></script>
   <script src="js/cursor.js" defer></script>
   <script src="js/image-stream-hero.js" defer></script>
   <script src="js/main.js" defer></script>
-  <script src="https://cdn.botpress.cloud/webchat/v5.0/inject.js"></script>
-  <script src="https://files.bpcontent.cloud/2026/09/19/04/20260919043446-5HKTUPO1.js" defer></script>
+
+  <!-- Lazy-loaded Heavy Engines (Three.js & Botpress) to maximize main-thread responsiveness -->
+  <script>
+    // 1. Idle-load Three.js 3D Neural Canvas to eliminate main-thread freeze on initial paint
+    (function() {
+      function loadThreeEngine() {
+        if (window.THREE) return;
+        const threeScript = document.createElement('script');
+        threeScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+        threeScript.onload = () => {
+          const sceneScript = document.createElement('script');
+          sceneScript.src = 'js/three-scene.js';
+          document.body.appendChild(sceneScript);
+        };
+        document.body.appendChild(threeScript);
+      }
+
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(() => setTimeout(loadThreeEngine, 250));
+      } else {
+        window.addEventListener('load', () => setTimeout(loadThreeEngine, 400));
+      }
+    })();
+
+    // 2. Defer Botpress Chatbot to first user interaction or idle to remove unused JS on initial load
+    (function() {
+      let botpressLoaded = false;
+      function loadBotpress() {
+        if (botpressLoaded) return;
+        botpressLoaded = true;
+        ['scroll', 'mousemove', 'touchstart', 'keydown'].forEach(evt => 
+          window.removeEventListener(evt, loadBotpress, { passive: true })
+        );
+        const s1 = document.createElement('script');
+        s1.src = 'https://cdn.botpress.cloud/webchat/v5.0/inject.js';
+        s1.async = true;
+        s1.onload = function() {
+          const s2 = document.createElement('script');
+          s2.src = 'https://files.bpcontent.cloud/2026/09/19/04/20260919043446-5HKTUPO1.js';
+          s2.defer = true;
+          document.body.appendChild(s2);
+        };
+        document.body.appendChild(s1);
+      }
+
+      ['scroll', 'mousemove', 'touchstart', 'keydown'].forEach(evt => 
+        window.addEventListener(evt, loadBotpress, { passive: true, once: true })
+      );
+
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(() => setTimeout(loadBotpress, 3500));
+      } else {
+        setTimeout(loadBotpress, 4000);
+      }
+    })();
+  </script>
 </body>
 </html>

@@ -189,9 +189,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (modalGithubLink) modalGithubLink.href = data.github;
 
-    // Render interactive simulator
-    if (window.renderProjectSimulator && modalSimContent) {
-      window.renderProjectSimulator(projectId, modalSimContent);
+    // Render interactive simulator on demand
+    const loadAndRenderSimulator = () => {
+      if (window.renderProjectSimulator && modalSimContent) {
+        window.renderProjectSimulator(projectId, modalSimContent);
+      }
+    };
+
+    if (!window.renderProjectSimulator) {
+      const script = document.createElement('script');
+      script.src = 'js/project-simulators.js';
+      script.onload = loadAndRenderSimulator;
+      document.body.appendChild(script);
+    } else {
+      loadAndRenderSimulator();
     }
 
     switchModalTab(defaultTab);
@@ -215,6 +226,17 @@ document.addEventListener('DOMContentLoaded', () => {
       if (modalArchTabBtn) modalArchTabBtn.classList.remove('is-active');
       if (modalSimContent) modalSimContent.style.display = 'block';
       if (modalArchContent) modalArchContent.style.display = 'none';
+
+      if (!window.renderProjectSimulator && activeProjectId) {
+        const script = document.createElement('script');
+        script.src = 'js/project-simulators.js';
+        script.onload = () => {
+          if (window.renderProjectSimulator && modalSimContent) {
+            window.renderProjectSimulator(activeProjectId, modalSimContent);
+          }
+        };
+        document.body.appendChild(script);
+      }
     } else {
       if (modalArchTabBtn) modalArchTabBtn.classList.add('is-active');
       if (modalSimTabBtn) modalSimTabBtn.classList.remove('is-active');

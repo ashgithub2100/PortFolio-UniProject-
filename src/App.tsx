@@ -2,10 +2,19 @@ import * as React from "react";
 import KineticGrid from "@/components/ui/kinetic-grid";
 import { Navbar } from "@/components/portfolio/navbar";
 import { HeroSection } from "@/components/portfolio/hero-section";
-import { AboutSection } from "@/components/portfolio/about-section";
-import { SkillsSection } from "@/components/portfolio/skills-section";
-import { ProjectsSection } from "@/components/portfolio/projects-section";
-import { ContactSection } from "@/components/portfolio/contact-section";
+
+const AboutSection = React.lazy(() =>
+  import("@/components/portfolio/about-section").then((m) => ({ default: m.AboutSection }))
+);
+const SkillsSection = React.lazy(() =>
+  import("@/components/portfolio/skills-section").then((m) => ({ default: m.SkillsSection }))
+);
+const ProjectsSection = React.lazy(() =>
+  import("@/components/portfolio/projects-section").then((m) => ({ default: m.ProjectsSection }))
+);
+const ContactSection = React.lazy(() =>
+  import("@/components/portfolio/contact-section").then((m) => ({ default: m.ContactSection }))
+);
 
 export default function App() {
   return (
@@ -16,10 +25,12 @@ export default function App() {
       <Navbar />
       <main id="main-content">
         <HeroSection />
-        <AboutSection />
-        <SkillsSection />
-        <ProjectsSection />
-        <ContactSection />
+        <React.Suspense fallback={null}>
+          <AboutSection />
+          <SkillsSection />
+          <ProjectsSection />
+          <ContactSection />
+        </React.Suspense>
       </main>
     </KineticGrid>
   );
